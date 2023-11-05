@@ -56,7 +56,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--num-gpus",
         type=int,
-        default=0,
+        default=1,
         help="The number of GPUs to use",
     )
     parser.add_argument(
@@ -68,7 +68,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--framework",
         choices=["tf", "tf2", "tfe", "torch"],
-        default="tf",
+        default="torch",
         help="The deep learning framework specifier",
     )
     parser.add_argument(
@@ -459,8 +459,9 @@ if __name__ == "__main__":
         .rollouts(num_rollout_workers=args.num_workers)
     )
 
-    print("PPO config:", config.to_dict())
 
+
+    #tuners search hyperparameter space
     tune.Tuner(
         "PPO",
         run_config=air.RunConfig(
@@ -469,5 +470,7 @@ if __name__ == "__main__":
         ),
         param_space=config.to_dict(),
     ).fit()
+
+
 
     ray.shutdown()
