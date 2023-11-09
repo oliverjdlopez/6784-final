@@ -69,7 +69,7 @@ python3 rllibenergyplus/run.py \
 Example of episode reward stats obtained training with PPO, 1e5 timesteps, 2 workers, with default parameters + LSTM, short E+ run period (2 first weeks of January). 
 Experiment took ~20min.
 
-![PPO stats](images/ppo_untuned.png "PPO training - Single AHU model")
+![PPO stats](simulator_env/images/ppo_untuned.png "PPO training - Single AHU model")
 
 ## Tracking an experiment
 
