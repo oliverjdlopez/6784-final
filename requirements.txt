@@ -6,3 +6,4 @@ tensorboard
 tensorflow-probability==0.14.1
 torch==2.0.1
 matplotlib
+scikit-learn
