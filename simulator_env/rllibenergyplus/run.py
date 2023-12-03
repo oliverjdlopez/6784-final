@@ -15,7 +15,6 @@ from ray.rllib.algorithms.ppo import PPOConfig
 from pyenergyplus.api import EnergyPlusAPI
 from pyenergyplus.datatransfer import DataExchange
 
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -129,6 +128,11 @@ class EnergyPlusRunner:
                 "System Node Setpoint",
                 "Temperature Setpoint",
                 "Node 3"
+            ),
+            "clg_spt": (
+                "System Node Setpoint",
+                "Temperature Setpoint",
+                "Node 10"
             )
         }
         self.actuator_handles: Dict[str, int] = {}
