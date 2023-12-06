@@ -61,20 +61,20 @@ $ python3 -c 'from pyenergyplus.api import EnergyPlusAPI; print(EnergyPlusAPI.ap
 ## Run example
 
 ```shell
-python3 rllibenergyplus/run.py \
+python3 simulator_env/rllibenergyplus/run.py \
   --idf /path/to/model.idf \
   --epw /path/to/LUX_LU_Luxembourg.AP.065900_TMYx.2004-2018.epw
 ```
 
-Example of episode reward stats obtained training with PPO, 1e5 timesteps, 2 workers, with default parameters + LSTM, short E+ run period (2 first weeks of January). 
+Example of episode reward stats obtained training with PPO, 1e5 timesteps, 2 workers, with default parameters + LSTM, short E+ run period (2 first weeks of January).
 Experiment took ~20min.
 
-![PPO stats](simulator_env/images/ppo_untuned.png "PPO training - Single AHU model")
+![PPO stats](simulator_env/images/ppo_untuned.png 'PPO training - Single AHU model')
 
 ## Tracking an experiment
 
-Tensorboard is installed with requirements. 
-To track an experiment running in a docker container, the container must be started with `--network host` parameter. 
+Tensorboard is installed with requirements.
+To track an experiment running in a docker container, the container must be started with `--network host` parameter.
 
 Start tensorboard with:
 
