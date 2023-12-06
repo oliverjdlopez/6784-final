@@ -61,7 +61,7 @@ $ python3 -c 'from pyenergyplus.api import EnergyPlusAPI; print(EnergyPlusAPI.ap
 ## Run example
 
 ```shell
-python3 simulator_env/rllibenergyplus/run.py \
+python3 simulator/rllibenergyplus/run.py \
   --idf /path/to/model.idf \
   --epw /path/to/LUX_LU_Luxembourg.AP.065900_TMYx.2004-2018.epw
 ```
