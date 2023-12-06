@@ -1,5 +1,5 @@
-ray[rllib]==2.5.0
-gymnasium
+ray[rllib]==2.5.1
+gymnasium~=0.26.3
 numpy==1.23.5
 protobuf==3.20.3
 tensorboard
@@ -7,3 +7,7 @@ tensorflow-probability==0.14.1
 torch==2.0.1
 matplotlib
 scikit-learn
+
+pyarrow~=14.0.0
+pandas~=2.1.2
+pytz~=2023.3.post1
