@@ -2,7 +2,7 @@
 
 # Simulator Environment
 
-Here, we try to train a control policy on a datacenter using Ray RLlib and EnergyPlus Python API.
+Here, we try to train a control policy on a [datacenter](https://github.com/atakanatamert/Energyplus-Improvement-and-Visualization-Tool/blob/master/Datacenter.idf) using Ray RLlib and EnergyPlus Python API.
 
 Requires Python 3.8+, EnergyPlus 9.3+
 
