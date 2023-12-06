@@ -1,8 +1,8 @@
 [![RLlib EnergyPlus Tests](https://github.com/airboxlab/rllib-energyplus/actions/workflows/tests.yml/badge.svg)](https://github.com/airboxlab/rllib-energyplus/actions/workflows/tests.yml)
 
-# Ray RLlib - EnergyPlus Python API integration
+# Simulator Environment
 
-An example of how to train a control policy using Ray RLlib and EnergyPlus Python API.
+Here, we try to train a control policy on a datacenter using Ray RLlib and EnergyPlus Python API.
 
 Requires Python 3.8+, EnergyPlus 9.3+
 
@@ -28,7 +28,7 @@ Inside the container, run the experiment
 
 ```shell
 cd /root/rllib-energyplus
-python3 rllibenergyplus/run.py --idf model.idf --epw LUX_LU_Luxembourg.AP.065900_TMYx.2004-2018.epw --framework torch
+python3 rllibenergyplus/run.py --idf lux.idf --epw LUX_LU_Luxembourg.AP.065900_TMYx.2004-2018.epw --framework torch
 ```
 
 ### Using virtual environment
@@ -59,17 +59,7 @@ $ python3 -c 'from pyenergyplus.api import EnergyPlusAPI; print(EnergyPlusAPI.ap
 ```
 
 ## Run example
-
-```shell
-python3 simulator/rllibenergyplus/run.py \
-  --idf /path/to/model.idf \
-  --epw /path/to/LUX_LU_Luxembourg.AP.065900_TMYx.2004-2018.epw
-```
-
-Example of episode reward stats obtained training with PPO, 1e5 timesteps, 2 workers, with default parameters + LSTM, short E+ run period (2 first weeks of January).
-Experiment took ~20min.
-
-![PPO stats](simulator_env/images/ppo_untuned.png 'PPO training - Single AHU model')
+TODO add a run example with output
 
 ## Tracking an experiment
 
