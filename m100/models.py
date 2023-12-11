@@ -11,26 +11,53 @@ class LinearNN(nn.Module):
     def forward(self, x):
         return self.lin1(x)
 
-def train(model, trainloader, optimizer, loss_fn, epochs, scheduler=None, batches=-1):
+def train_epoch(model, trainloader, optimizer, loss_fn, scheduler=None, n_batches=-1):
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     model.train()
-    for e in range(epochs):
+    losses = []
+    # Iterating over data to carry out training step
+    for ii, (inputs, labels) in enumerate(trainloader):
+        if n_batches == ii:
+            del inputs, labels
+            break
+
+        inputs, labels = inputs.to(device), labels.to(device)
+        optimizer.zero_grad()
+        outs = model.forward(inputs)
+        outs, labels = torch.squeeze(outs), torch.squeeze(labels)
+        loss = loss_fn(outs, labels)
+        losses.append(loss)
+        loss.backward()
+        optimizer.step()
+        del inputs, labels, outs
+    if scheduler:
+        scheduler.step()
+
+    model.eval()
+    return losses
+
+
+#TODO: NOT DONE
+def eval_epoch(model, evalloader, loss_fn, n_batches=-1):
+    device = "cuda:0" if torch.cuda.is_available() else "cpu"
+    model.eval()
+    losses = []
+    with torch.no_grad():
         # Iterating over data to carry out training step
-        for ii, (inputs, labels) in enumerate(trainloader):
-            if batches == ii:
+        for ii, (inputs, labels) in enumerate(evalloader):
+            if n_batches == ii:
                 del inputs, labels
                 break
+
             inputs, labels = inputs.to(device), labels.to(device)
-            optimizer.zero_grad()
             outs = model.forward(inputs)
             outs, labels = torch.squeeze(outs), torch.squeeze(labels)
             loss = loss_fn(outs, labels)
-            loss.backward()
-            optimizer.step()
+            losses.append(loss)
             del inputs, labels, outs
-        if scheduler:
-            scheduler.step()
+
     model.eval()
+    return losses
 class StateEstimator:
     def __init__(self, s0):
         # Truths
