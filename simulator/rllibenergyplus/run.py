@@ -127,12 +127,7 @@ class EnergyPlusRunner:
             "sat_spt": (
                 "System Node Setpoint",
                 "Temperature Setpoint",
-                "Node 3"
-            ),
-            "clg_spt": (
-                "System Node Setpoint",
-                "Temperature Setpoint",
-                "Node 10"
+                "EAST PLENUM OUTLET NODE"
             )
         }
         self.actuator_handles: Dict[str, int] = {}

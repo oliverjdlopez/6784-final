@@ -1,0 +1,90 @@
+<Packages>
+    <ApplicationName>EnergyPlus</ApplicationName>
+    <ApplicationVersion>1.0.0</ApplicationVersion>
+    <Package>
+        <Name>Datasets</Name>
+        <Title>Datasets</Title>
+        <Description>Useful resources such as material and equipment performance data</Description>
+        <SortingPriority>0</SortingPriority>
+        <TreeName moveChildren="false"></TreeName>
+        <Version>22.2.0</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2023-12-11</InstallDate>
+        <Size>27291583</Size>
+        <Checkable>true</Checkable>
+    </Package>
+    <Package>
+        <Name>Documentation</Name>
+        <Title>Documentation</Title>
+        <Description>EnergyPlus documentation in PDF format</Description>
+        <SortingPriority>0</SortingPriority>
+        <TreeName moveChildren="false"></TreeName>
+        <Version>22.2.0</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2023-12-11</InstallDate>
+        <Size>57847824</Size>
+        <Checkable>true</Checkable>
+    </Package>
+    <Package>
+        <Name>ExampleFiles</Name>
+        <Title>Example Files</Title>
+        <Description>IDF Example Files</Description>
+        <SortingPriority>0</SortingPriority>
+        <TreeName moveChildren="false"></TreeName>
+        <Version>22.2.0</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2023-12-11</InstallDate>
+        <Size>259803875</Size>
+        <Checkable>true</Checkable>
+    </Package>
+    <Package>
+        <Name>Licenses</Name>
+        <Title>Licenses</Title>
+        <Description>License files for EnergyPlus</Description>
+        <SortingPriority>0</SortingPriority>
+        <TreeName moveChildren="false"></TreeName>
+        <Version>22.2.0</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2023-12-11</InstallDate>
+        <Size>3207</Size>
+        <ForcedInstallation>true</ForcedInstallation>
+        <Virtual>true</Virtual>
+    </Package>
+    <Package>
+        <Name>Symlinks</Name>
+        <Title>Create Symlinks - requires admin</Title>
+        <Description>This will symlink the executable to /usr/local/bin and copy the man page</Description>
+        <SortingPriority>0</SortingPriority>
+        <TreeName moveChildren="false"></TreeName>
+        <Version>22.2.0</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2023-12-11</InstallDate>
+        <Size>2817</Size>
+        <Checkable>true</Checkable>
+    </Package>
+    <Package>
+        <Name>Unspecified</Name>
+        <Title>Unspecified</Title>
+        <Description></Description>
+        <SortingPriority>0</SortingPriority>
+        <TreeName moveChildren="false"></TreeName>
+        <Version>22.2.0</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2023-12-11</InstallDate>
+        <Size>315887134</Size>
+        <ForcedInstallation>true</ForcedInstallation>
+        <Virtual>true</Virtual>
+    </Package>
+    <Package>
+        <Name>WeatherData</Name>
+        <Title>Weather Data</Title>
+        <Description>EPW Weather Files</Description>
+        <SortingPriority>0</SortingPriority>
+        <TreeName moveChildren="false"></TreeName>
+        <Version>22.2.0</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2023-12-11</InstallDate>
+        <Size>8496291</Size>
+        <Checkable>true</Checkable>
+    </Package>
+</Packages>
