@@ -1,0 +1,315 @@
+************************************* Invoked: Mon Dec 11 19:37:24 2023
+[0] Arguments: /private/var/folders/08/893lwtz12fb0vd7w3h3k1mch0000gn/T/AppTranslocation/98D72F87-3645-4797-BD18-10D760075D53/d/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.app/Contents/MacOS/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64
+[4] Operations sanity check succeeded.
+[5] Language: en-US
+[10766] Preparing meta information download...
+[43826] OverwriteTargetDirectory : Warning : You have selected an existing, non-empty directory for installation.
+Note that it will be completely wiped on uninstallation of this application.
+It is not advisable to install into this directory as installation might fail.
+Do you want to continue? Yes|No
+[88246] Installation space required: "894.33 MB" Temporary space required: "256.00 MB" Local repository size: "0.00 bytes"
+[88252] Tmp and install directories are on the same volume. Volume mount point: "/" Free space available: "607.78 GB"
+[89433] backup  operation: Mkdir
+[89433] 	- arguments: /usr/local/EnergyPlus-22.2.0
+[89434] Done
+[89434] perform  operation: Mkdir
+[89434] 	- arguments: /usr/local/EnergyPlus-22.2.0
+[89434] Done
+[95230] perform  operation: Mkdir
+[95230] 	- arguments: /usr/local/EnergyPlus-22.2.0
+[95231] Done
+[95233] Preparing the installation...
+[95233] Install size: 7 components
+[95246] Preparing to unpack components...
+[95248] backup Symlinks concurrent operation: Extract
+[95248] 	- arguments: installer://Symlinks/22.2.0content.7z, /usr/local/EnergyPlus-22.2.0
+[95248] Started
+[95248] backup Datasets concurrent operation: Extract
+[95248] 	- arguments: installer://Datasets/22.2.0DataSets.7z, /usr/local/EnergyPlus-22.2.0
+[95248] Started
+[95248] backup Datasets concurrent operation: Extract
+[95248] 	- arguments: installer://Datasets/22.2.0MacroDataSets.7z, /usr/local/EnergyPlus-22.2.0
+[95248] Started
+[95248] backup Documentation concurrent operation: Extract
+[95248] 	- arguments: installer://Documentation/22.2.0Documentation.7z, /usr/local/EnergyPlus-22.2.0
+[95248] Started
+[95248] backup ExampleFiles concurrent operation: Extract
+[95248] 	- arguments: installer://ExampleFiles/22.2.0ExampleFiles.7z, /usr/local/EnergyPlus-22.2.0
+[95248] Started
+[95248] backup Licenses concurrent operation: Extract
+[95248] 	- arguments: installer://Licenses/22.2.0content.7z, /usr/local/EnergyPlus-22.2.0
+[95248] Started
+[95248] backup Unspecified concurrent operation: Extract
+[95248] 	- arguments: installer://Unspecified/22.2.0content.7z, /usr/local/EnergyPlus-22.2.0
+[95248] Started
+[95248] backup Unspecified concurrent operation: Extract
+[95248] 	- arguments: installer://Unspecified/22.2.0PreProcess.7z, /usr/local/EnergyPlus-22.2.0
+[95248] Started
+[95248] backup Unspecified concurrent operation: Extract
+[95248] 	- arguments: installer://Unspecified/22.2.0include.7z, /usr/local/EnergyPlus-22.2.0
+[95248] Started
+[95250] backup Unspecified concurrent operation: Extract
+[95250] 	- arguments: installer://Unspecified/22.2.0PostProcess.7z, /usr/local/EnergyPlus-22.2.0
+[95250] Started
+[95257] backup Unspecified concurrent operation: Extract
+[95257] 	- arguments: installer://Unspecified/22.2.0pyenergyplus.7z, /usr/local/EnergyPlus-22.2.0
+[95257] Started
+[95257] backup Unspecified concurrent operation: Extract
+[95257] 	- arguments: installer://Unspecified/22.2.0python_standard_lib.7z, /usr/local/EnergyPlus-22.2.0
+[95257] Started
+[95260] backup Unspecified concurrent operation: Extract
+[95260] 	- arguments: installer://Unspecified/22.2.0workflows.7z, /usr/local/EnergyPlus-22.2.0
+[95260] Started
+[95262] backup WeatherData concurrent operation: Extract
+[95262] 	- arguments: installer://WeatherData/22.2.0WeatherData.7z, /usr/local/EnergyPlus-22.2.0
+[95262] Started
+[96315] Unpacking components...
+[96316] perform Documentation concurrent operation: Extract
+[96316] 	- arguments: installer://Documentation/22.2.0Documentation.7z, /usr/local/EnergyPlus-22.2.0
+[96316] Started
+[96316] perform Unspecified concurrent operation: Extract
+[96316] 	- arguments: installer://Unspecified/22.2.0PreProcess.7z, /usr/local/EnergyPlus-22.2.0
+[96316] Started
+[96316] perform Unspecified concurrent operation: Extract
+[96316] 	- arguments: installer://Unspecified/22.2.0content.7z, /usr/local/EnergyPlus-22.2.0
+[96316] Started
+[96317] perform ExampleFiles concurrent operation: Extract
+[96317] 	- arguments: installer://ExampleFiles/22.2.0ExampleFiles.7z, /usr/local/EnergyPlus-22.2.0
+[96317] Started
+[96317] perform Unspecified concurrent operation: Extract
+[96317] 	- arguments: installer://Unspecified/22.2.0python_standard_lib.7z, /usr/local/EnergyPlus-22.2.0
+[96317] Started
+[96317] perform Unspecified concurrent operation: Extract
+[96317] 	- arguments: installer://Unspecified/22.2.0PostProcess.7z, /usr/local/EnergyPlus-22.2.0
+[96317] Started
+[96317] perform Datasets concurrent operation: Extract
+[96317] 	- arguments: installer://Datasets/22.2.0DataSets.7z, /usr/local/EnergyPlus-22.2.0
+[96317] Started
+[96317] perform WeatherData concurrent operation: Extract
+[96317] 	- arguments: installer://WeatherData/22.2.0WeatherData.7z, /usr/local/EnergyPlus-22.2.0
+[96317] Started
+[96317] perform Datasets concurrent operation: Extract
+[96317] 	- arguments: installer://Datasets/22.2.0MacroDataSets.7z, /usr/local/EnergyPlus-22.2.0
+[96317] Started
+[96317] perform Unspecified concurrent operation: Extract
+[96317] 	- arguments: installer://Unspecified/22.2.0pyenergyplus.7z, /usr/local/EnergyPlus-22.2.0
+[96317] Started
+[96339] perform Unspecified concurrent operation: Extract
+[96339] 	- arguments: installer://Unspecified/22.2.0include.7z, /usr/local/EnergyPlus-22.2.0
+[96339] Started
+[96352] perform Unspecified concurrent operation: Extract
+[96352] 	- arguments: installer://Unspecified/22.2.0workflows.7z, /usr/local/EnergyPlus-22.2.0
+[96352] Started
+[96359] perform Licenses concurrent operation: Extract
+[96359] 	- arguments: installer://Licenses/22.2.0content.7z, /usr/local/EnergyPlus-22.2.0
+[96359] Started
+[96367] perform Symlinks concurrent operation: Extract
+[96367] 	- arguments: installer://Symlinks/22.2.0content.7z, /usr/local/EnergyPlus-22.2.0
+[96367] Started
+[99406] Installing component Create Symlinks - requires admin
+[99406] backup Symlinks operation: Execute
+[99406] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/Basement, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/Basement
+[99407] Done
+[99407] perform Symlinks operation: Execute
+[99407] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/Basement, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/Basement
+[99418] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/Basement /usr/local/bin
+[99462] Done
+[99462] backup Symlinks operation: Execute
+[99462] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/BasementGHT.idd, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/BasementGHT.idd
+[99462] Done
+[99463] perform Symlinks operation: Execute
+[99463] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/BasementGHT.idd, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/BasementGHT.idd
+[99469] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/BasementGHT.idd /usr/local/bin
+[99474] Done
+[99474] backup Symlinks operation: Execute
+[99474] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PostProcess/convertESOMTRpgm/convertESOMTR, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/convertESOMTR
+[99474] Done
+[99474] perform Symlinks operation: Execute
+[99474] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PostProcess/convertESOMTRpgm/convertESOMTR, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/convertESOMTR
+[99478] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/PostProcess/convertESOMTRpgm/convertESOMTR /usr/local/bin
+[99483] Done
+[99483] backup Symlinks operation: Execute
+[99483] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/energyplus, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/energyplus
+[99483] Done
+[99483] perform Symlinks operation: Execute
+[99483] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/energyplus, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/energyplus
+[99488] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/energyplus /usr/local/bin
+[99492] Done
+[99492] backup Symlinks operation: Execute
+[99492] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/Energy+.idd, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/Energy+.idd
+[99492] Done
+[99493] perform Symlinks operation: Execute
+[99493] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/Energy+.idd, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/Energy+.idd
+[99497] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/Energy+.idd /usr/local/bin
+[99501] Done
+[99501] backup Symlinks operation: Execute
+[99501] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/Energy+.schema.epJSON, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/Energy+.schema.epJSON
+[99501] Done
+[99502] perform Symlinks operation: Execute
+[99502] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/Energy+.schema.epJSON, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/Energy+.schema.epJSON
+[99506] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/Energy+.schema.epJSON /usr/local/bin
+[99510] Done
+[99511] backup Symlinks operation: Execute
+[99511] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/EPMacro, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/EPMacro
+[99511] Done
+[99511] perform Symlinks operation: Execute
+[99511] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/EPMacro, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/EPMacro
+[99515] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/EPMacro /usr/local/bin
+[99520] Done
+[99520] backup Symlinks operation: Execute
+[99520] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/ExpandObjects, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/ExpandObjects
+[99520] Done
+[99520] perform Symlinks operation: Execute
+[99520] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/ExpandObjects, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/ExpandObjects
+[99525] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/ExpandObjects /usr/local/bin
+[99529] Done
+[99529] backup Symlinks operation: Execute
+[99529] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PostProcess/HVAC-Diagram, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/HVAC-Diagram
+[99529] Done
+[99530] perform Symlinks operation: Execute
+[99530] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PostProcess/HVAC-Diagram, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/HVAC-Diagram
+[99534] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/PostProcess/HVAC-Diagram /usr/local/bin
+[99539] Done
+[99539] backup Symlinks operation: Execute
+[99539] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PreProcess/ParametricPreprocessor/ParametricPreprocessor, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/ParametricPreprocessor
+[99539] Done
+[99539] perform Symlinks operation: Execute
+[99539] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PreProcess/ParametricPreprocessor/ParametricPreprocessor, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/ParametricPreprocessor
+[99543] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/PreProcess/ParametricPreprocessor/ParametricPreprocessor /usr/local/bin
+[99548] Done
+[99549] backup Symlinks operation: Execute
+[99549] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PostProcess/ReadVarsESO, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/ReadVarsESO
+[99549] Done
+[99549] perform Symlinks operation: Execute
+[99549] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PostProcess/ReadVarsESO, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/ReadVarsESO
+[99553] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/PostProcess/ReadVarsESO /usr/local/bin
+[99557] Done
+[99558] backup Symlinks operation: Execute
+[99558] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/runenergyplus, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/runenergyplus
+[99558] Done
+[99558] perform Symlinks operation: Execute
+[99558] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/runenergyplus, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/runenergyplus
+[99562] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/runenergyplus /usr/local/bin
+[99567] Done
+[99567] backup Symlinks operation: Execute
+[99567] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/runepmacro, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/runepmacro
+[99567] Done
+[99567] perform Symlinks operation: Execute
+[99567] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/runepmacro, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/runepmacro
+[99571] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/runepmacro /usr/local/bin
+[99576] Done
+[99576] backup Symlinks operation: Execute
+[99576] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/runreadvars, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/runreadvars
+[99576] Done
+[99576] perform Symlinks operation: Execute
+[99576] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/runreadvars, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/runreadvars
+[99580] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/runreadvars /usr/local/bin
+[99585] Done
+[99585] backup Symlinks operation: Execute
+[99585] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/Slab, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/Slab
+[99585] Done
+[99585] perform Symlinks operation: Execute
+[99585] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/Slab, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/Slab
+[99590] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/Slab /usr/local/bin
+[99595] Done
+[99595] backup Symlinks operation: Execute
+[99595] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/SlabGHT.idd, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/SlabGHT.idd
+[99595] Done
+[99595] perform Symlinks operation: Execute
+[99595] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/SlabGHT.idd, /usr/local/bin, UNDOEXECUTE, rm, /usr/local/bin/SlabGHT.idd
+[99599] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/PreProcess/GrndTempCalc/SlabGHT.idd /usr/local/bin
+[99604] Done
+[99604] backup Symlinks operation: Execute
+[99604] 	- arguments: mkdir, -p, /usr/local/share/man/man1
+[99604] Done
+[99605] perform Symlinks operation: Execute
+[99605] 	- arguments: mkdir, -p, /usr/local/share/man/man1
+[99609] mkdir" started, arguments: "-p /usr/local/share/man/man1
+[99644] Done
+[99644] backup Symlinks operation: Execute
+[99644] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/energyplus.1, /usr/local/share/man/man1/energyplus.1, UNDOEXECUTE, rm, /usr/local/share/man/man1/energyplus.1
+[99644] Done
+[99644] perform Symlinks operation: Execute
+[99644] 	- arguments: ln, -sf, /usr/local/EnergyPlus-22.2.0/energyplus.1, /usr/local/share/man/man1/energyplus.1, UNDOEXECUTE, rm, /usr/local/share/man/man1/energyplus.1
+[99650] ln" started, arguments: "-sf /usr/local/EnergyPlus-22.2.0/energyplus.1 /usr/local/share/man/man1/energyplus.1
+[99656] Done
+[99665] Installing component Licenses
+[99666] backup Licenses operation: License
+[99666] 	- arguments:
+[99666] Done
+[99666] perform Licenses operation: License
+[99666] 	- arguments:
+[99667] Done
+[99669] Installing component Unspecified
+[99671] backup Unspecified operation: Execute
+[99671] 	- arguments: chmod, +x, /usr/local/EnergyPlus-22.2.0/PreProcess/IDFVersionUpdater/IDFVersionUpdater.app/Contents/MacOS/IDFVersionUpdater
+[99671] Done
+[99671] perform Unspecified operation: Execute
+[99671] 	- arguments: chmod, +x, /usr/local/EnergyPlus-22.2.0/PreProcess/IDFVersionUpdater/IDFVersionUpdater.app/Contents/MacOS/IDFVersionUpdater
+[99677] chmod" started, arguments: "+x /usr/local/EnergyPlus-22.2.0/PreProcess/IDFVersionUpdater/IDFVersionUpdater.app/Contents/MacOS/IDFVersionUpdater
+[99714] Done
+[99715] backup Unspecified operation: Execute
+[99715] 	- arguments: chmod, +x, /usr/local/EnergyPlus-22.2.0/PreProcess/EP-Launch-Lite.app/Contents/MacOS/EP-Launch-Lite
+[99715] Done
+[99715] perform Unspecified operation: Execute
+[99715] 	- arguments: chmod, +x, /usr/local/EnergyPlus-22.2.0/PreProcess/EP-Launch-Lite.app/Contents/MacOS/EP-Launch-Lite
+[99721] chmod" started, arguments: "+x /usr/local/EnergyPlus-22.2.0/PreProcess/EP-Launch-Lite.app/Contents/MacOS/EP-Launch-Lite
+[99726] Done
+[99727] backup Unspecified operation: Execute
+[99727] 	- arguments: chmod, +x, /usr/local/EnergyPlus-22.2.0/PreProcess/EP-Launch-Lite.app/Contents/MacOS/python
+[99727] Done
+[99727] perform Unspecified operation: Execute
+[99727] 	- arguments: chmod, +x, /usr/local/EnergyPlus-22.2.0/PreProcess/EP-Launch-Lite.app/Contents/MacOS/python
+[99732] chmod" started, arguments: "+x /usr/local/EnergyPlus-22.2.0/PreProcess/EP-Launch-Lite.app/Contents/MacOS/python
+[99737] Done
+[99737] backup Unspecified operation: Execute
+[99737] 	- arguments: chmod, +x, /usr/local/EnergyPlus-22.2.0/PostProcess/EP-Compare/EP-Compare.app/Contents/MacOS/EP-Compare
+[99737] Done
+[99737] perform Unspecified operation: Execute
+[99737] 	- arguments: chmod, +x, /usr/local/EnergyPlus-22.2.0/PostProcess/EP-Compare/EP-Compare.app/Contents/MacOS/EP-Compare
+[99742] chmod" started, arguments: "+x /usr/local/EnergyPlus-22.2.0/PostProcess/EP-Compare/EP-Compare.app/Contents/MacOS/EP-Compare
+[99747] Done
+[99758] backup  operation: Mkdir
+[99758] 	- arguments: /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS
+[99764] Done
+[99766] perform  operation: Mkdir
+[99766] 	- arguments: /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS
+[99767] Done
+[99769] backup  operation: Copy
+[99769] 	- arguments: /private/var/folders/08/893lwtz12fb0vd7w3h3k1mch0000gn/T/AppTranslocation/98D72F87-3645-4797-BD18-10D760075D53/d/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.app/Contents/MacOS/../PkgInfo, /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS/../PkgInfo
+[99769] Done
+[99771] perform  operation: Copy
+[99771] 	- arguments: /private/var/folders/08/893lwtz12fb0vd7w3h3k1mch0000gn/T/AppTranslocation/98D72F87-3645-4797-BD18-10D760075D53/d/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.app/Contents/MacOS/../PkgInfo, /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS/../PkgInfo
+[99772] Done
+[99773] backup  operation: Copy
+[99773] 	- arguments: /private/var/folders/08/893lwtz12fb0vd7w3h3k1mch0000gn/T/AppTranslocation/98D72F87-3645-4797-BD18-10D760075D53/d/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.app/Contents/MacOS/../Info.plist, /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS/../Info.plist
+[99773] Done
+[99773] perform  operation: Copy
+[99773] 	- arguments: /private/var/folders/08/893lwtz12fb0vd7w3h3k1mch0000gn/T/AppTranslocation/98D72F87-3645-4797-BD18-10D760075D53/d/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.app/Contents/MacOS/../Info.plist, /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS/../Info.plist
+[99775] Done
+[99778] perform  operation: CopyDirectory
+[99778] 	- arguments: /private/var/folders/08/893lwtz12fb0vd7w3h3k1mch0000gn/T/AppTranslocation/98D72F87-3645-4797-BD18-10D760075D53/d/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.app/Contents/MacOS/../Resources/qt_menu.nib, /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS/../Resources/qt_menu.nib
+[99779] Done
+[99780] backup  operation: Mkdir
+[99780] 	- arguments: /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/Resources
+[99782] Done
+[99782] perform  operation: Mkdir
+[99782] 	- arguments: /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/Resources
+[99782] Done
+[99782] backup  operation: Copy
+[99782] 	- arguments: /private/var/folders/08/893lwtz12fb0vd7w3h3k1mch0000gn/T/AppTranslocation/98D72F87-3645-4797-BD18-10D760075D53/d/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.app/Contents/MacOS/../Resources/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.icns, /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS/../Resources/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.icns
+[99783] Done
+[99783] perform  operation: Copy
+[99783] 	- arguments: /private/var/folders/08/893lwtz12fb0vd7w3h3k1mch0000gn/T/AppTranslocation/98D72F87-3645-4797-BD18-10D760075D53/d/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.app/Contents/MacOS/../Resources/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.icns, /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS/../Resources/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.icns
+[99787] Done
+[99787] perform  operation: CopyDirectory
+[99787] 	- arguments: /private/var/folders/08/893lwtz12fb0vd7w3h3k1mch0000gn/T/AppTranslocation/98D72F87-3645-4797-BD18-10D760075D53/d/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.app/Contents/MacOS/../Frameworks, /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS/../Frameworks
+[99788] Done
+[99788] perform  operation: CopyDirectory
+[99788] 	- arguments: /private/var/folders/08/893lwtz12fb0vd7w3h3k1mch0000gn/T/AppTranslocation/98D72F87-3645-4797-BD18-10D760075D53/d/EnergyPlus-22.2.0-c249759bad-Darwin-macOS12.1-arm64.app/Contents/MacOS/../plugins, /usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS/../plugins
+[99788] Done
+[99794] Writing maintenance tool: "/usr/local/EnergyPlus-22.2.0/maintenancetool.app/Contents/MacOS/maintenancetool.new"
+[99795] Writing maintenance tool.
+[100044] Wrote permissions for maintenance tool.
+[100060] Maintenance tool hard restart: false.
+[100062] Installation finished!
