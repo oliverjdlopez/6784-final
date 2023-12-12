@@ -49,7 +49,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--num-workers",
         type=int,
-        default=2,
+        default=1,
         help="The number of workers to use",
     )
     parser.add_argument(
@@ -127,12 +127,7 @@ class EnergyPlusRunner:
             "sat_spt": (
                 "System Node Setpoint",
                 "Temperature Setpoint",
-                "Node 3"
-            ),
-            "clg_spt": (
-                "System Node Setpoint",
-                "Temperature Setpoint",
-                "Node 10"
+                "EAST PLENUM OUTLET NODE"
             )
         }
         self.actuator_handles: Dict[str, int] = {}
@@ -211,6 +206,12 @@ class EnergyPlusRunner:
         """
         if self.simulation_complete or not self._init_callback(state_argument):
             return
+
+        # some_bytes = self.x.
+
+        # with open("my_file.txt", "wb") as binary_file:
+        #     # Write bytes to file
+        #     binary_file.write(some_bytes)
 
         self.next_obs = {
             **{
