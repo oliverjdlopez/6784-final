@@ -49,7 +49,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--num-workers",
         type=int,
-        default=2,
+        default=1,
         help="The number of workers to use",
     )
     parser.add_argument(
