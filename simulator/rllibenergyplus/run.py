@@ -207,11 +207,15 @@ class EnergyPlusRunner:
         if self.simulation_complete or not self._init_callback(state_argument):
             return
 
-        # some_bytes = self.x.
+        # Open file in binary write mode
+        binary_file = open("my_file.txt", "wb")
 
-        # with open("my_file.txt", "wb") as binary_file:
-        #     # Write bytes to file
-        #     binary_file.write(some_bytes)
+        # Write bytes to file
+        binary_file.write(self.x.get_api_data(state_argument))
+
+        # Close file
+        binary_file.close()
+
 
         self.next_obs = {
             **{
