@@ -5,17 +5,22 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 
 class LinearNN(nn.Module):
-    def __init__(self, feature_dim, action_dim, hidden_dim=64):
-        super(LinearNN, self).__init__()
-        self.lin1 = nn.Linear(feature_dim + action_dim, hidden_dim)
+    def __init__(self, feature_dim, action_dim, hidden_dim=128):
+        super(EnhancedLinearNN, self).__init__()
+        self.fc1 = nn.Linear(feature_dim + action_dim, hidden_dim)
+        self.bn1 = nn.BatchNorm1d(hidden_dim)
         self.relu = nn.ReLU()
-        self.lin2 = nn.Linear(hidden_dim, feature_dim)
         self.dropout = nn.Dropout(0.5)
+        self.fc2 = nn.Linear(hidden_dim, hidden_dim // 2)
+        self.bn2 = nn.BatchNorm1d(hidden_dim // 2)
+        self.fc3 = nn.Linear(hidden_dim // 2, feature_dim)
 
     def forward(self, x):
-        x = self.relu(self.lin1(x))
+        x = self.relu(self.bn1(self.fc1(x)))
         x = self.dropout(x)
-        return self.lin2(x)
+        x = self.relu(self.bn2(self.fc2(x)))
+        return self.fc3(x)
+
 
 def train(model, trainloader, optimizer, loss_fn, epochs, scheduler=None, batches=-1):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
