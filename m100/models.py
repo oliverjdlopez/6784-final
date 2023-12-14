@@ -6,8 +6,9 @@ import scipy
 
 class LinearNN(nn.Module):
 
-    def __init__(self, feature_dim, action_dim):
-        self.lin1 = nn.Linear(feature_dim+action_dim, feature_dim)
+    def __init__(self, feature_dim, label_dim):
+        super().__init__()
+        self.lin1 = nn.Linear(feature_dim, label_dim)
     def forward(self, x):
         return self.lin1(x)
 
@@ -38,13 +39,13 @@ def train_epoch(model, trainloader, optimizer, loss_fn, scheduler=None, n_batche
 
 
 #TODO: NOT DONE
-def eval_epoch(model, evalloader, loss_fn, n_batches=-1):
+def test_epoch(model, testloader, loss_fn, n_batches=-1):
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     model.eval()
     losses = []
     with torch.no_grad():
         # Iterating over data to carry out training step
-        for ii, (inputs, labels) in enumerate(evalloader):
+        for ii, (inputs, labels) in enumerate(testloader):
             if n_batches == ii:
                 del inputs, labels
                 break
