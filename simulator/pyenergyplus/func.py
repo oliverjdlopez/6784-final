@@ -1,4 +1,4 @@
-# EnergyPlus, Copyright (c) 1996-2022, The Board of Trustees of the University
+# EnergyPlus, Copyright (c) 1996-2023, The Board of Trustees of the University
 # of Illinois, The Regents of the University of California, through Lawrence
 # Berkeley National Laboratory (subject to receipt of any required approvals
 # from the U.S. Dept. of Energy), Oak Ridge National Laboratory, managed by UT-
@@ -554,10 +554,10 @@ class EnergyPlusVersion:
     """
 
     def __init__(self):
-        self.ep_version_major = int("22")
-        self.ep_version_minor = int("2")
+        self.ep_version_major = int("23")
+        self.ep_version_minor = int("1")
         self.ep_version_patch = int("0")
-        self.ep_version_build = str("c249759bad")
+        self.ep_version_build = str("87ed9199d4")
 
     def __str__(self) -> str:
         """

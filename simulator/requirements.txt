@@ -1,5 +1,5 @@
-ray[rllib]==2.5.1
-gymnasium~=0.26.3
+ray[rllib]==2.8.0
+gymnasium~=0.28.1
 numpy==1.23.5
 protobuf==3.20.3
 tensorboard~=2.15.1

@@ -15,6 +15,7 @@ from ray.rllib.algorithms.ppo import PPOConfig
 from pyenergyplus.api import EnergyPlusAPI
 from pyenergyplus.datatransfer import DataExchange
 
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -49,7 +50,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--num-workers",
         type=int,
-        default=1,
+        default=2,
         help="The number of workers to use",
     )
     parser.add_argument(
@@ -67,7 +68,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--framework",
         choices=["tf", "tf2", "tfe", "torch"],
-        default="torch",
+        default="tf",
         help="The deep learning framework specifier",
     )
     parser.add_argument(
@@ -116,9 +117,7 @@ class EnergyPlusRunner:
 
         self.meters = {
             # HVAC elec (J)
-            "elec": "Electricity:HVAC",
-            # District heating (J)
-            "dh": "Heating:DistrictHeating"
+            "elec": "Electricity:HVAC"
         }
         self.meter_handles: Dict[str, int] = {}
 
@@ -127,7 +126,7 @@ class EnergyPlusRunner:
             "sat_spt": (
                 "System Node Setpoint",
                 "Temperature Setpoint",
-                "EAST PLENUM OUTLET NODE"
+                "Node 3"
             )
         }
         self.actuator_handles: Dict[str, int] = {}
@@ -206,16 +205,6 @@ class EnergyPlusRunner:
         """
         if self.simulation_complete or not self._init_callback(state_argument):
             return
-
-        # Open file in binary write mode
-        binary_file = open("my_file.txt", "wb")
-
-        # Write bytes to file
-        binary_file.write(self.x.get_api_data(state_argument))
-
-        # Close file
-        binary_file.close()
-
 
         self.next_obs = {
             **{
@@ -310,12 +299,12 @@ class EnergyPlusEnv(gym.Env):
         self.timestep = 0
 
         # observation space:
-        # OAT, IAT, CO2, cooling setpoint, heating setpoint, fans elec, district heating
+        # OAT, IAT, CO2, cooling setpoint, heating setpoint, fans elec
         low_obs = np.array(
-            [-40.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            [-40.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         )
         hig_obs = np.array(
-            [40.0, 40.0, 1e5, 30.0, 30.0, 1e8, 1e8]
+            [40.0, 40.0, 1e5, 30.0, 30.0, 1e8]
         )
         self.observation_space = gym.spaces.Box(
             low=low_obs, high=hig_obs, dtype=np.float32
@@ -420,7 +409,7 @@ class EnergyPlusEnv(gym.Env):
         else:
             tmp_rew = 0
 
-        reward = -(1e-7 * (obs["elec"] + obs["dh"])) - tmp_rew - (1e-3 * obs["co2"])
+        reward = -(1e-7 * (obs["elec"])) - tmp_rew - (1e-3 * obs["co2"])
         return reward
 
     @staticmethod
@@ -456,21 +445,28 @@ if __name__ == "__main__":
             train_batch_size=4000,
             sgd_minibatch_size=128,
             vf_loss_coeff=0.01,
-            model={"use_lstm": args.use_lstm},
-            # TODO: enable learner API once LSTM / Attention nets are supported
-            _enable_learner_api=False
+            use_critic=True,
+            use_gae=True,
+            model={
+                "use_lstm": args.use_lstm,
+                "vf_share_layers": False,
+            },
+            _enable_learner_api=True,
         )
+        .rl_module(_enable_rl_module_api=True)
         .framework(
             framework=args.framework,
-            eager_tracing=args.framework == "tf2"
+            eager_tracing=args.framework == "tf2",
         )
         .resources(num_gpus=args.num_gpus)
-        .rollouts(num_rollout_workers=args.num_workers)
+        .rollouts(
+            num_rollout_workers=args.num_workers,
+            rollout_fragment_length="auto",
+        )
     )
 
+    print("PPO config:", config.to_dict())
 
-
-    #tuners search hyperparameter space
     tune.Tuner(
         "PPO",
         run_config=air.RunConfig(
@@ -479,7 +475,5 @@ if __name__ == "__main__":
         ),
         param_space=config.to_dict(),
     ).fit()
-
-
 
     ray.shutdown()

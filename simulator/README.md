@@ -48,7 +48,7 @@ pip install -r requirements.txt
 Add EnergyPlus folder to `PYTHONPATH` environment variable:
 
 ```shell
-export PYTHONPATH="/usr/local/EnergyPlus-23-1-0/:$PYTHONPATH"
+export PYTHONPATH="$PWD/:$PYTHONPATH"
 ```
 
 Make sure you can import EnergyPlus API by printing its version number
@@ -59,8 +59,9 @@ $ python3 -c 'from pyenergyplus.api import EnergyPlusAPI; print(EnergyPlusAPI.ap
 ```
 
 ## Run example
-TODO add a run example with output
-
+```shell
+python3 rllibenergyplus/run.py --idf models/datacenter.idf --epw models/weather/LUX_LU_Luxembourg.AP.065900_TMYx.2004-2018.epw --framework torch
+```
 ## Tracking an experiment
 
 Tensorboard is installed with requirements.

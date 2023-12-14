@@ -15,15 +15,19 @@ build_time_vars = {'ABIFLAGS': '',
  'BLDSHARED': 'clang -bundle -undefined dynamic_lookup '
               '-L/opt/homebrew/opt/readline/lib '
               '-L/opt/homebrew/opt/readline/lib '
-              '-L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/lib '
+              '-L/Users/julien/.pyenv/versions/3.8.12/lib '
+              '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+              '-Wl,-rpath,/opt/homebrew/lib '
               '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib '
               '-L/opt/homebrew/opt/readline/lib '
               '-L/opt/homebrew/opt/readline/lib '
-              '-L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/lib '
+              '-L/Users/julien/.pyenv/versions/3.8.12/lib '
+              '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+              '-Wl,-rpath,/opt/homebrew/lib '
               '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib',
  'BUILDEXE': '.exe',
  'BUILDPYTHON': 'python.exe',
- 'BUILD_GNU_TYPE': 'arm-apple-darwin21.3.0',
+ 'BUILD_GNU_TYPE': 'arm-apple-darwin21.6.0',
  'BYTESTR_DEPS': '\\',
  'CC': 'clang',
  'CCSHARED': '',
@@ -45,42 +49,51 @@ build_time_vars = {'ABIFLAGS': '',
  'CONFIGURE_CPPFLAGS': '-I/opt/homebrew/opt/readline/include '
                        '-I/opt/homebrew/opt/readline/include '
                        '-I/Users/julien/.pyenv/versions/3.8.12/include '
+                       '-I/opt/homebrew/opt/tcl-tk/include '
                        '-I/opt/homebrew/include',
  'CONFIGURE_LDFLAGS': '-L/opt/homebrew/opt/readline/lib '
                       '-L/opt/homebrew/opt/readline/lib '
                       '-L/Users/julien/.pyenv/versions/3.8.12/lib '
-                      '-L/opt/homebrew/lib '
+                      '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+                      '-Wl,-rpath,/opt/homebrew/lib '
                       '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib',
  'CONFIGURE_LDFLAGS_NODIST': '',
  'CONFIG_ARGS': "'--prefix=/Users/julien/.pyenv/versions/3.8.12' "
                 "'--enable-shared' "
                 "'--libdir=/Users/julien/.pyenv/versions/3.8.12/lib' "
-                "'--with-openssl=/opt/homebrew/opt/openssl@1.1' 'CC=clang' "
+                "'--with-openssl=/opt/homebrew/opt/openssl@1.1' "
+                "'--with-tcltk-libs=-L/opt/homebrew/opt/tcl-tk/lib -ltcl8.6 "
+                "-ltk8.6' "
+                "'--with-tcltk-includes=-I/opt/homebrew/opt/tcl-tk/include' "
+                "'CC=clang' "
                 "'CFLAGS=-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include  "
                 "' 'LDFLAGS=-L/opt/homebrew/opt/readline/lib "
                 '-L/opt/homebrew/opt/readline/lib '
                 '-L/Users/julien/.pyenv/versions/3.8.12/lib '
-                '-L/opt/homebrew/lib '
+                '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+                '-Wl,-rpath,/opt/homebrew/lib '
                 "-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib' "
+                "'LIBS=-L/opt/homebrew/lib -Wl,-rpath,/opt/homebrew/lib' "
                 "'CPPFLAGS=-I/opt/homebrew/opt/readline/include "
                 '-I/opt/homebrew/opt/readline/include '
                 '-I/Users/julien/.pyenv/versions/3.8.12/include '
-                "-I/opt/homebrew/include' "
-                "'PKG_CONFIG_PATH=/opt/homebrew/opt/openssl@1.1/lib/pkgconfig/:'",
+                "-I/opt/homebrew/opt/tcl-tk/include -I/opt/homebrew/include' "
+                "'PKG_CONFIG_PATH=/opt/homebrew/opt/tcl-tk/lib/pkgconfig:/opt/homebrew/opt/openssl@1.1/lib/pkgconfig/:'",
  'CONFINCLUDEDIR': '/Users/julien/.pyenv/versions/3.8.12/include',
  'CONFINCLUDEPY': '/Users/julien/.pyenv/versions/3.8.12/include/python3.8',
  'COREPYTHONPATH': '',
- 'COVERAGE_INFO': '/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20220228235741.39054/Python-3.8.12/coverage.info',
- 'COVERAGE_REPORT': '/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20220228235741.39054/Python-3.8.12/lcov-report',
+ 'COVERAGE_INFO': '/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20221122153512.61274/Python-3.8.12/coverage.info',
+ 'COVERAGE_REPORT': '/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20221122153512.61274/Python-3.8.12/lcov-report',
  'COVERAGE_REPORT_OPTIONS': '--no-branch-coverage --title "CPython lcov '
                             'report"',
  'CPPFLAGS': '-I. -I./Include -I/opt/homebrew/opt/readline/include '
              '-I/opt/homebrew/opt/readline/include '
              '-I/Users/julien/.pyenv/versions/3.8.12/include '
-             '-I/opt/homebrew/include -I/opt/homebrew/opt/readline/include '
+             '-I/opt/homebrew/opt/tcl-tk/include -I/opt/homebrew/include '
+             '-I/opt/homebrew/opt/readline/include '
              '-I/opt/homebrew/opt/readline/include '
              '-I/Users/julien/.pyenv/versions/3.8.12/include '
-             '-I/opt/homebrew/include',
+             '-I/opt/homebrew/opt/tcl-tk/include -I/opt/homebrew/include',
  'CXX': 'clang++',
  'DESTDIRS': '/Users/julien/.pyenv/versions/3.8.12 '
              '/Users/julien/.pyenv/versions/3.8.12/lib '
@@ -331,9 +344,9 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_MEMRCHR': 0,
  'HAVE_MKDIRAT': 1,
  'HAVE_MKFIFO': 1,
- 'HAVE_MKFIFOAT': 0,
+ 'HAVE_MKFIFOAT': 1,
  'HAVE_MKNOD': 1,
- 'HAVE_MKNODAT': 0,
+ 'HAVE_MKNODAT': 1,
  'HAVE_MKTIME': 1,
  'HAVE_MMAP': 1,
  'HAVE_MREMAP': 0,
@@ -545,7 +558,7 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE_X509_VERIFY_PARAM_SET1_HOST': 1,
  'HAVE_ZLIB_COPY': 1,
  'HAVE__GETPTY': 0,
- 'HOST_GNU_TYPE': 'arm-apple-darwin21.3.0',
+ 'HOST_GNU_TYPE': 'arm-apple-darwin21.6.0',
  'INCLDIRSTOMAKE': '/Users/julien/.pyenv/versions/3.8.12/include '
                    '/Users/julien/.pyenv/versions/3.8.12/include '
                    '/Users/julien/.pyenv/versions/3.8.12/include/python3.8 '
@@ -562,10 +575,14 @@ build_time_vars = {'ABIFLAGS': '',
  'IO_OBJS': '\\',
  'LDCXXSHARED': 'clang++ -bundle -undefined dynamic_lookup',
  'LDFLAGS': '-L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/readline/lib '
-            '-L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/lib '
+            '-L/Users/julien/.pyenv/versions/3.8.12/lib '
+            '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+            '-Wl,-rpath,/opt/homebrew/lib '
             '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib '
             '-L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/readline/lib '
-            '-L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/lib '
+            '-L/Users/julien/.pyenv/versions/3.8.12/lib '
+            '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+            '-Wl,-rpath,/opt/homebrew/lib '
             '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib',
  'LDFLAGS_NODIST': '',
  'LDLIBRARY': 'libpython3.8.dylib',
@@ -573,11 +590,15 @@ build_time_vars = {'ABIFLAGS': '',
  'LDSHARED': 'clang -bundle -undefined dynamic_lookup '
              '-L/opt/homebrew/opt/readline/lib '
              '-L/opt/homebrew/opt/readline/lib '
-             '-L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/lib '
+             '-L/Users/julien/.pyenv/versions/3.8.12/lib '
+             '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+             '-Wl,-rpath,/opt/homebrew/lib '
              '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib '
              '-L/opt/homebrew/opt/readline/lib '
              '-L/opt/homebrew/opt/readline/lib '
-             '-L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/lib '
+             '-L/Users/julien/.pyenv/versions/3.8.12/lib '
+             '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+             '-Wl,-rpath,/opt/homebrew/lib '
              '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib',
  'LDVERSION': '3.8',
  'LIBC': '',
@@ -593,7 +614,8 @@ build_time_vars = {'ABIFLAGS': '',
  'LIBRARY': 'libpython3.8.a',
  'LIBRARY_OBJS': '\\',
  'LIBRARY_OBJS_OMIT_FROZEN': '\\',
- 'LIBS': '-lintl -ldl   -framework CoreFoundation',
+ 'LIBS': '-lintl -ldl -L/opt/homebrew/lib -Wl,-rpath,/opt/homebrew/lib  '
+         '-framework CoreFoundation',
  'LIBSUBDIRS': 'tkinter tkinter/test tkinter/test/test_tkinter \\',
  'LINKCC': 'clang',
  'LINKFORSHARED': '-Wl,-stack_size,1000000  -framework CoreFoundation',
@@ -669,7 +691,7 @@ build_time_vars = {'ABIFLAGS': '',
  'PYTHONFRAMEWORKPREFIX': '',
  'PYTHONPATH': '',
  'PYTHON_FOR_BUILD': './python.exe -E',
- 'PYTHON_FOR_REGEN': 'python3',
+ 'PYTHON_FOR_REGEN': 'python3.8',
  'PYTHON_HEADERS': '\\',
  'PYTHON_OBJS': '\\',
  'PY_BUILTIN_MODULE_CFLAGS': '-Wno-unused-result -Wsign-compare '
@@ -685,10 +707,12 @@ build_time_vars = {'ABIFLAGS': '',
                              '-I/opt/homebrew/opt/readline/include '
                              '-I/opt/homebrew/opt/readline/include '
                              '-I/Users/julien/.pyenv/versions/3.8.12/include '
+                             '-I/opt/homebrew/opt/tcl-tk/include '
                              '-I/opt/homebrew/include '
                              '-I/opt/homebrew/opt/readline/include '
                              '-I/opt/homebrew/opt/readline/include '
                              '-I/Users/julien/.pyenv/versions/3.8.12/include '
+                             '-I/opt/homebrew/opt/tcl-tk/include '
                              '-I/opt/homebrew/include -DPy_BUILD_CORE_BUILTIN',
  'PY_CFLAGS': '-Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG '
               '-g -fwrapv -O3 -Wall '
@@ -711,36 +735,44 @@ build_time_vars = {'ABIFLAGS': '',
                    '-I/opt/homebrew/opt/readline/include '
                    '-I/opt/homebrew/opt/readline/include '
                    '-I/Users/julien/.pyenv/versions/3.8.12/include '
-                   '-I/opt/homebrew/include '
+                   '-I/opt/homebrew/opt/tcl-tk/include -I/opt/homebrew/include '
                    '-I/opt/homebrew/opt/readline/include '
                    '-I/opt/homebrew/opt/readline/include '
                    '-I/Users/julien/.pyenv/versions/3.8.12/include '
-                   '-I/opt/homebrew/include -DPy_BUILD_CORE',
+                   '-I/opt/homebrew/opt/tcl-tk/include -I/opt/homebrew/include '
+                   '-DPy_BUILD_CORE',
  'PY_CORE_LDFLAGS': '-L/opt/homebrew/opt/readline/lib '
                     '-L/opt/homebrew/opt/readline/lib '
                     '-L/Users/julien/.pyenv/versions/3.8.12/lib '
-                    '-L/opt/homebrew/lib '
+                    '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+                    '-Wl,-rpath,/opt/homebrew/lib '
                     '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib '
                     '-L/opt/homebrew/opt/readline/lib '
                     '-L/opt/homebrew/opt/readline/lib '
                     '-L/Users/julien/.pyenv/versions/3.8.12/lib '
-                    '-L/opt/homebrew/lib '
+                    '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+                    '-Wl,-rpath,/opt/homebrew/lib '
                     '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib',
  'PY_CPPFLAGS': '-I. -I./Include -I/opt/homebrew/opt/readline/include '
                 '-I/opt/homebrew/opt/readline/include '
                 '-I/Users/julien/.pyenv/versions/3.8.12/include '
-                '-I/opt/homebrew/include -I/opt/homebrew/opt/readline/include '
+                '-I/opt/homebrew/opt/tcl-tk/include -I/opt/homebrew/include '
+                '-I/opt/homebrew/opt/readline/include '
                 '-I/opt/homebrew/opt/readline/include '
                 '-I/Users/julien/.pyenv/versions/3.8.12/include '
-                '-I/opt/homebrew/include',
+                '-I/opt/homebrew/opt/tcl-tk/include -I/opt/homebrew/include',
  'PY_FORMAT_SIZE_T': '"z"',
  'PY_LDFLAGS': '-L/opt/homebrew/opt/readline/lib '
                '-L/opt/homebrew/opt/readline/lib '
-               '-L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/lib '
+               '-L/Users/julien/.pyenv/versions/3.8.12/lib '
+               '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+               '-Wl,-rpath,/opt/homebrew/lib '
                '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib '
                '-L/opt/homebrew/opt/readline/lib '
                '-L/opt/homebrew/opt/readline/lib '
-               '-L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/lib '
+               '-L/Users/julien/.pyenv/versions/3.8.12/lib '
+               '-L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib '
+               '-Wl,-rpath,/opt/homebrew/lib '
                '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib',
  'PY_LDFLAGS_NODIST': '',
  'PY_SSL_DEFAULT_CIPHERS': 1,
@@ -757,10 +789,12 @@ build_time_vars = {'ABIFLAGS': '',
                         '-I/opt/homebrew/opt/readline/include '
                         '-I/opt/homebrew/opt/readline/include '
                         '-I/Users/julien/.pyenv/versions/3.8.12/include '
+                        '-I/opt/homebrew/opt/tcl-tk/include '
                         '-I/opt/homebrew/include '
                         '-I/opt/homebrew/opt/readline/include '
                         '-I/opt/homebrew/opt/readline/include '
                         '-I/Users/julien/.pyenv/versions/3.8.12/include '
+                        '-I/opt/homebrew/opt/tcl-tk/include '
                         '-I/opt/homebrew/include',
  'Py_DEBUG': 0,
  'Py_ENABLE_SHARED': 1,
@@ -770,12 +804,13 @@ build_time_vars = {'ABIFLAGS': '',
  'READELF': ':',
  'RESSRCDIR': 'Mac/Resources/framework',
  'RETSIGTYPE': 'void',
- 'RUNSHARED': 'DYLD_LIBRARY_PATH=/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20220228235741.39054/Python-3.8.12',
+ 'RUNSHARED': 'DYLD_LIBRARY_PATH=/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20221122153512.61274/Python-3.8.12',
  'SCRIPTDIR': '/Users/julien/.pyenv/versions/3.8.12/lib',
  'SETPGRP_HAVE_ARG': 0,
  'SGI_ABI': '@SGI_ABI@',
  'SHELL': '/bin/sh',
- 'SHLIBS': '-lintl -ldl   -framework CoreFoundation',
+ 'SHLIBS': '-lintl -ldl -L/opt/homebrew/lib -Wl,-rpath,/opt/homebrew/lib  '
+           '-framework CoreFoundation',
  'SHLIB_SUFFIX': '.so',
  'SHM_NEEDS_LIBRT': 0,
  'SIGNED_RIGHT_SHIFT_ZERO_FILLS': 0,
@@ -808,14 +843,14 @@ build_time_vars = {'ABIFLAGS': '',
  'SUBDIRSTOO': 'Include Lib Misc',
  'SYSLIBS': '',
  'SYS_SELECT_WITH_SYS_TIME': 1,
- 'TCLTK_INCLUDES': '',
- 'TCLTK_LIBS': '',
+ 'TCLTK_INCLUDES': '-I/opt/homebrew/opt/tcl-tk/include',
+ 'TCLTK_LIBS': '-L/opt/homebrew/opt/tcl-tk/lib -ltcl8.6 -ltk8.6',
  'TESTOPTS': '',
  'TESTPATH': '',
- 'TESTPYTHON': 'DYLD_LIBRARY_PATH=/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20220228235741.39054/Python-3.8.12 '
+ 'TESTPYTHON': 'DYLD_LIBRARY_PATH=/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20221122153512.61274/Python-3.8.12 '
                './python.exe',
  'TESTPYTHONOPTS': '',
- 'TESTRUNNER': 'DYLD_LIBRARY_PATH=/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20220228235741.39054/Python-3.8.12 '
+ 'TESTRUNNER': 'DYLD_LIBRARY_PATH=/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20221122153512.61274/Python-3.8.12 '
                './python.exe ./Tools/scripts/run_tests.py',
  'TESTTIMEOUT': 1200,
  'TIMEMODULE_LIB': 0,
@@ -823,7 +858,7 @@ build_time_vars = {'ABIFLAGS': '',
  'TM_IN_SYS_TIME': 0,
  'UNICODE_DEPS': '\\',
  'UNIVERSALSDK': '',
- 'UPDATE_FILE': 'python3 ./Tools/scripts/update_file.py',
+ 'UPDATE_FILE': 'python3.8 ./Tools/scripts/update_file.py',
  'USE_COMPUTED_GOTOS': 0,
  'VERSION': '3.8',
  'WINDOW_HAS_FLAGS': 1,
@@ -837,8 +872,8 @@ build_time_vars = {'ABIFLAGS': '',
  'WITH_VALGRIND': 0,
  'X87_DOUBLE_ROUNDING': 0,
  'XMLLIBSUBDIRS': 'xml xml/dom xml/etree xml/parsers xml/sax',
- 'abs_builddir': '/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20220228235741.39054/Python-3.8.12',
- 'abs_srcdir': '/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20220228235741.39054/Python-3.8.12',
+ 'abs_builddir': '/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20221122153512.61274/Python-3.8.12',
+ 'abs_srcdir': '/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20221122153512.61274/Python-3.8.12',
  'datarootdir': '/Users/julien/.pyenv/versions/3.8.12/share',
  'exec_prefix': '/Users/julien/.pyenv/versions/3.8.12',
  'prefix': '/Users/julien/.pyenv/versions/3.8.12',
