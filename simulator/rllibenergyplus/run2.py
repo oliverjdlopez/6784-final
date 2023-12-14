@@ -310,7 +310,7 @@ class EnergyPlusEnv(gym.Env):
             [-40.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         )
         hig_obs = np.array(
-            [40.0, 40.0, 30.0, 30.0, 1e8, 1e8, 1e8]
+            [40.0, 40.0, 30.0, 30.0, 9e8, 9e8, 9e8]
         )
 
         self.observation_space = gym.spaces.Box(
