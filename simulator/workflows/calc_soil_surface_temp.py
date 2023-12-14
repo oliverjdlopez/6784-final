@@ -1,4 +1,4 @@
-# EnergyPlus, Copyright (c) 1996-2022, The Board of Trustees of the University
+# EnergyPlus, Copyright (c) 1996-2023, The Board of Trustees of the University
 # of Illinois, The Regents of the University of California, through Lawrence
 # Berkeley National Laboratory (subject to receipt of any required approvals
 # from the U.S. Dept. of Energy), Oak Ridge National Laboratory, managed by UT-
@@ -70,10 +70,10 @@ class ColumnNames(object):
 class CalcSoilSurfTempWorkflow(BaseEPLaunchWorkflow1):
 
     def name(self):
-        return "CalcSoilSurfTemp-22.2.0"
+        return "CalcSoilSurfTemp-23.1.0"
 
     def context(self):
-        return "EnergyPlus-22.2.0-c249759bad"
+        return "EnergyPlus-23.1.0-87ed9199d4"
 
     def description(self):
         return "Run CalcSoilSurfTemp Preprocessor"

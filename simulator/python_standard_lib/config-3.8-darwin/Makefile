@@ -30,8 +30,8 @@ MODLIBS=           $(LOCALMODLIBS) $(BASEMODLIBS)
 VERSION=	3.8
 srcdir=		.
 
-abs_srcdir=	/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20220228235741.39054/Python-3.8.12
-abs_builddir=	/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20220228235741.39054/Python-3.8.12
+abs_srcdir=	/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20221122153512.61274/Python-3.8.12
+abs_builddir=	/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20221122153512.61274/Python-3.8.12
 
 
 CC=		clang
@@ -90,8 +90,8 @@ CONFIGURE_CFLAGS_NODIST= -std=c99 -Wextra -Wno-unused-result -Wno-unused-paramet
 # Use it when a linker flag should _not_ be part of the distutils LDFLAGS
 # once Python is installed (bpo-35257)
 CONFIGURE_LDFLAGS_NODIST=
-CONFIGURE_CPPFLAGS=	-I/opt/homebrew/opt/readline/include -I/opt/homebrew/opt/readline/include -I/Users/julien/.pyenv/versions/3.8.12/include -I/opt/homebrew/include
-CONFIGURE_LDFLAGS=	-L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/readline/lib -L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/lib -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib
+CONFIGURE_CPPFLAGS=	-I/opt/homebrew/opt/readline/include -I/opt/homebrew/opt/readline/include -I/Users/julien/.pyenv/versions/3.8.12/include -I/opt/homebrew/opt/tcl-tk/include -I/opt/homebrew/include
+CONFIGURE_LDFLAGS=	-L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/readline/lib -L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib -Wl,-rpath,/opt/homebrew/lib -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib
 # Avoid assigning CFLAGS, LDFLAGS, etc. so users can use them on the
 # command line to append to these values without stomping the pre-set
 # values.
@@ -190,7 +190,7 @@ LIPO_INTEL64_FLAGS=
 OTHER_LIBTOOL_OPT=
 
 # Environment to run shared python without installed libraries
-RUNSHARED=       DYLD_LIBRARY_PATH=/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20220228235741.39054/Python-3.8.12
+RUNSHARED=       DYLD_LIBRARY_PATH=/var/folders/bz/sgrc10ls2d9fz7418xw3wgym0000gn/T/python-build.20221122153512.61274/Python-3.8.12
 
 # ensurepip options
 ENSUREPIP=      upgrade
@@ -207,7 +207,7 @@ EXEMODE=	755
 FILEMODE=	644
 
 # configure script arguments
-CONFIG_ARGS=	 '--prefix=/Users/julien/.pyenv/versions/3.8.12' '--enable-shared' '--libdir=/Users/julien/.pyenv/versions/3.8.12/lib' '--with-openssl=/opt/homebrew/opt/openssl@1.1' 'CC=clang' 'CFLAGS=-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include  ' 'LDFLAGS=-L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/readline/lib -L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/lib -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib' 'CPPFLAGS=-I/opt/homebrew/opt/readline/include -I/opt/homebrew/opt/readline/include -I/Users/julien/.pyenv/versions/3.8.12/include -I/opt/homebrew/include' 'PKG_CONFIG_PATH=/opt/homebrew/opt/openssl@1.1/lib/pkgconfig/:'
+CONFIG_ARGS=	 '--prefix=/Users/julien/.pyenv/versions/3.8.12' '--enable-shared' '--libdir=/Users/julien/.pyenv/versions/3.8.12/lib' '--with-openssl=/opt/homebrew/opt/openssl@1.1' '--with-tcltk-libs=-L/opt/homebrew/opt/tcl-tk/lib -ltcl8.6 -ltk8.6' '--with-tcltk-includes=-I/opt/homebrew/opt/tcl-tk/include' 'CC=clang' 'CFLAGS=-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include  ' 'LDFLAGS=-L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/readline/lib -L/Users/julien/.pyenv/versions/3.8.12/lib -L/opt/homebrew/opt/tcl-tk/lib -L/opt/homebrew/lib -Wl,-rpath,/opt/homebrew/lib -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib' 'LIBS=-L/opt/homebrew/lib -Wl,-rpath,/opt/homebrew/lib' 'CPPFLAGS=-I/opt/homebrew/opt/readline/include -I/opt/homebrew/opt/readline/include -I/Users/julien/.pyenv/versions/3.8.12/include -I/opt/homebrew/opt/tcl-tk/include -I/opt/homebrew/include' 'PKG_CONFIG_PATH=/opt/homebrew/opt/tcl-tk/lib/pkgconfig:/opt/homebrew/opt/openssl@1.1/lib/pkgconfig/:'
 
 
 # Subdirectories with code
@@ -232,7 +232,7 @@ LDLIBRARYDIR=
 INSTSONAME=	$(LDLIBRARY)
 
 
-LIBS=		-lintl -ldl   -framework CoreFoundation
+LIBS=		-lintl -ldl -L/opt/homebrew/lib -Wl,-rpath,/opt/homebrew/lib  -framework CoreFoundation
 LIBM=		
 LIBC=		
 SYSLIBS=	$(LIBM) $(LIBC)
@@ -247,16 +247,16 @@ LIBOBJS=
 PYTHON=		python$(EXE)
 BUILDPYTHON=	python$(BUILDEXE)
 
-PYTHON_FOR_REGEN=python3
-UPDATE_FILE=python3 $(srcdir)/Tools/scripts/update_file.py
+PYTHON_FOR_REGEN=python3.8
+UPDATE_FILE=python3.8 $(srcdir)/Tools/scripts/update_file.py
 PYTHON_FOR_BUILD=./$(BUILDPYTHON) -E
 _PYTHON_HOST_PLATFORM=
-BUILD_GNU_TYPE=	arm-apple-darwin21.3.0
-HOST_GNU_TYPE=	arm-apple-darwin21.3.0
+BUILD_GNU_TYPE=	arm-apple-darwin21.6.0
+HOST_GNU_TYPE=	arm-apple-darwin21.6.0
 
 # Tcl and Tk config info from --with-tcltk-includes and -libs options
-TCLTK_INCLUDES=	
-TCLTK_LIBS=	
+TCLTK_INCLUDES=	-I/opt/homebrew/opt/tcl-tk/include
+TCLTK_LIBS=	-L/opt/homebrew/opt/tcl-tk/lib -ltcl8.6 -ltk8.6
 
 # The task to run while instrumented when building the profile-opt target.
 # To speed up profile generation, we don't run the full unit test suite

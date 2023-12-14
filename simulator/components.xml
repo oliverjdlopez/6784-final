@@ -2,14 +2,26 @@
     <ApplicationName>EnergyPlus</ApplicationName>
     <ApplicationVersion>1.0.0</ApplicationVersion>
     <Package>
+        <Name>CPPAPI</Name>
+        <Title>CPPAPI</Title>
+        <Description></Description>
+        <SortingPriority>0</SortingPriority>
+        <TreeName moveChildren="false"></TreeName>
+        <Version>23.1.0</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2023-11-05</InstallDate>
+        <Size>7581</Size>
+        <Checkable>true</Checkable>
+    </Package>
+    <Package>
         <Name>Datasets</Name>
         <Title>Datasets</Title>
         <Description>Useful resources such as material and equipment performance data</Description>
         <SortingPriority>0</SortingPriority>
         <TreeName moveChildren="false"></TreeName>
-        <Version>22.2.0</Version>
+        <Version>23.1.0</Version>
         <LastUpdateDate></LastUpdateDate>
-        <InstallDate>2023-12-11</InstallDate>
+        <InstallDate>2023-11-05</InstallDate>
         <Size>27291583</Size>
         <Checkable>true</Checkable>
     </Package>
@@ -19,10 +31,10 @@
         <Description>EnergyPlus documentation in PDF format</Description>
         <SortingPriority>0</SortingPriority>
         <TreeName moveChildren="false"></TreeName>
-        <Version>22.2.0</Version>
+        <Version>23.1.0</Version>
         <LastUpdateDate></LastUpdateDate>
-        <InstallDate>2023-12-11</InstallDate>
-        <Size>57847824</Size>
+        <InstallDate>2023-11-05</InstallDate>
+        <Size>58102674</Size>
         <Checkable>true</Checkable>
     </Package>
     <Package>
@@ -31,10 +43,10 @@
         <Description>IDF Example Files</Description>
         <SortingPriority>0</SortingPriority>
         <TreeName moveChildren="false"></TreeName>
-        <Version>22.2.0</Version>
+        <Version>23.1.0</Version>
         <LastUpdateDate></LastUpdateDate>
-        <InstallDate>2023-12-11</InstallDate>
-        <Size>259803875</Size>
+        <InstallDate>2023-11-05</InstallDate>
+        <Size>261621244</Size>
         <Checkable>true</Checkable>
     </Package>
     <Package>
@@ -43,9 +55,9 @@
         <Description>License files for EnergyPlus</Description>
         <SortingPriority>0</SortingPriority>
         <TreeName moveChildren="false"></TreeName>
-        <Version>22.2.0</Version>
+        <Version>23.1.0</Version>
         <LastUpdateDate></LastUpdateDate>
-        <InstallDate>2023-12-11</InstallDate>
+        <InstallDate>2023-11-05</InstallDate>
         <Size>3207</Size>
         <ForcedInstallation>true</ForcedInstallation>
         <Virtual>true</Virtual>
@@ -56,9 +68,9 @@
         <Description>This will symlink the executable to /usr/local/bin and copy the man page</Description>
         <SortingPriority>0</SortingPriority>
         <TreeName moveChildren="false"></TreeName>
-        <Version>22.2.0</Version>
+        <Version>23.1.0</Version>
         <LastUpdateDate></LastUpdateDate>
-        <InstallDate>2023-12-11</InstallDate>
+        <InstallDate>2023-11-05</InstallDate>
         <Size>2817</Size>
         <Checkable>true</Checkable>
     </Package>
@@ -68,10 +80,10 @@
         <Description></Description>
         <SortingPriority>0</SortingPriority>
         <TreeName moveChildren="false"></TreeName>
-        <Version>22.2.0</Version>
+        <Version>23.1.0</Version>
         <LastUpdateDate></LastUpdateDate>
-        <InstallDate>2023-12-11</InstallDate>
-        <Size>315887134</Size>
+        <InstallDate>2023-11-05</InstallDate>
+        <Size>263505884</Size>
         <ForcedInstallation>true</ForcedInstallation>
         <Virtual>true</Virtual>
     </Package>
@@ -81,9 +93,9 @@
         <Description>EPW Weather Files</Description>
         <SortingPriority>0</SortingPriority>
         <TreeName moveChildren="false"></TreeName>
-        <Version>22.2.0</Version>
+        <Version>23.1.0</Version>
         <LastUpdateDate></LastUpdateDate>
-        <InstallDate>2023-12-11</InstallDate>
+        <InstallDate>2023-11-05</InstallDate>
         <Size>8496291</Size>
         <Checkable>true</Checkable>
     </Package>

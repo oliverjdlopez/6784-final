@@ -103,31 +103,26 @@ class EnergyPlusRunner:
         self.variables = {
             # °C
             "oat": ("Site Outdoor Air DryBulb Temperature", "Environment"),
-            # °C
-            "iat": ("Zone Mean Air Temperature", "TZ_Amphitheater"),
-            # ppm
-            "co2": ("Zone Air CO2 Concentration", "TZ_Amphitheater"),
-            # heating setpoint (°C)
-            "htg_spt": ("Schedule Value", "HTG HVAC 1 ADJUSTED BY 1.1 F"),
-            # cooling setpoint (°C)
-            "clg_spt": ("Schedule Value", "CLG HVAC 1 ADJUSTED BY 0 F"),
+            "iat": ("Zone Mean Air Temperature", "TZ_Amphitheater"), # lux.idf
+            # "west_itecpu_er": ("ITE CPU Electricity Rate", "WESTDATACENTER_EQUIP"), # datacenter.idf
+            # "itecpu_er": ("ITE CPU Electricity Rate", "DATA CENTER SERVERS") # 1zonecrac.idf
         }
         self.var_handles: Dict[str, int] = {}
 
         self.meters = {
-            # HVAC elec (J)
-            "elec": "Electricity:HVAC",
-            # District heating (J)
-            "dh": "Heating:DistrictHeating"
+            # HVAC elec (J) # todo unsure if this is working for our idf file
+            "elec": "Electricity:HVAC"
         }
         self.meter_handles: Dict[str, int] = {}
 
         self.actuators = {
-            # supply air temperature setpoint (°C)
-            "sat_spt": (
+            # west zone supply air temperature setpoint (°C)
+            "west_sat_spt": (
                 "System Node Setpoint",
                 "Temperature Setpoint",
-                "EAST PLENUM OUTLET NODE"
+                "Node 3" # lux.idf
+                # "SUPPLY INLET NODE" # 1zonecrac.idf
+                # "WEST ZONE INLET NODE" datacenter.idf
             )
         }
         self.actuator_handles: Dict[str, int] = {}
@@ -208,14 +203,15 @@ class EnergyPlusRunner:
             return
 
         # Open file in binary write mode
-        binary_file = open("my_file.txt", "wb")
+        # binary_file = open("my_file.txt", "w")
+
+        # available_data = self.x.list_available_api_data_csv(state_argument).decode('utf-8')
 
         # Write bytes to file
-        binary_file.write(self.x.get_api_data(state_argument))
+        # binary_file.write(available_data)
 
         # Close file
-        binary_file.close()
-
+        # binary_file.close()
 
         self.next_obs = {
             **{
@@ -229,24 +225,34 @@ class EnergyPlusRunner:
                 in self.meter_handles.items()
             }
         }
+        print(f"Obs: {self.next_obs}")
+
         self.obs_queue.put(self.next_obs)
 
     def _send_actions(self, state_argument):
         """
         EnergyPlus callback that sets actuator value from last decided action
         """
+        print(f"Begin Send actions. Sim complete: {self.simulation_complete}")
+        # self.simulation_complete or not
         if self.simulation_complete or not self._init_callback(state_argument):
             return
+
+        print(f"Send actions, level 2!")
 
         if self.act_queue.empty():
             return
 
+        print(f"Send actions, level 3!")
+
         next_action = self.act_queue.get()
         assert isinstance(next_action, float)
 
+        print(f"Next action: {next_action}")
+
         self.x.set_actuator_value(
             state=state_argument,
-            actuator_handle=self.actuator_handles["sat_spt"],
+            actuator_handle=self.actuator_handles["west_sat_spt"],
             actuator_value=next_action
         )
 
@@ -308,17 +314,19 @@ class EnergyPlusEnv(gym.Env):
         self.env_config = env_config
         self.episode = -1
         self.timestep = 0
+        # self.spec.max_episode_steps = 1000 # TODO default
 
+        # TODO alter these
         # observation space:
-        # OAT, IAT, CO2, cooling setpoint, heating setpoint, fans elec, district heating
+        # OAT, west_itecpu_er, HVAC elec, west zone temp setpoint
         low_obs = np.array(
-            [-40.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            [-40.0, 0.0, 0.0, -40.0]
         )
         hig_obs = np.array(
-            [40.0, 40.0, 1e5, 30.0, 30.0, 1e8, 1e8]
+            [40.0, 1e6, 1e8, 40.0]
         )
         self.observation_space = gym.spaces.Box(
-            low=low_obs, high=hig_obs, dtype=np.float32
+            low=low_obs, high=hig_obs, dtype=np.float64
         )
         self.last_obs = {}
 
@@ -360,6 +368,7 @@ class EnergyPlusEnv(gym.Env):
         return np.array(list(obs.values())), {}
 
     def step(self, action):
+        print(f"Begin step!")
         self.timestep += 1
         done = False
 
@@ -373,7 +382,7 @@ class EnergyPlusEnv(gym.Env):
             done = True
             obs = self.last_obs
         else:
-            # rescale agent decision to actuator range
+            # rescale agent decision to actuator range # todo check these
             sat_spt_value = self._rescale(
                 n=int(action),  # noqa
                 range1=(0, self.action_space.n),
@@ -386,7 +395,7 @@ class EnergyPlusEnv(gym.Env):
             # and materializes by worker thread waiting on this queue (EnergyPlus callback
             # not consuming yet/anymore)
             # timeout value can be increased if E+ timestep takes longer
-            timeout = 2
+            timeout = 5
             try:
                 self.act_queue.put(sat_spt_value, timeout=timeout)
                 self.last_obs = obs = self.obs_queue.get(timeout=timeout)
@@ -410,17 +419,24 @@ class EnergyPlusEnv(gym.Env):
     @staticmethod
     def _compute_reward(obs: Dict[str, float]) -> float:
         """compute reward scalar"""
-        if obs["htg_spt"] > 0 and obs["clg_spt"] > 0:
+        # todo alter reward
+        # oat, west_itecpu_er, elec, west_sat_spt
+        # oat, west_itecpu_er, elec, west_sat_spt
+        print("Begin compute_reward")
+
+        # todo check east sat spt
+        if obs["west_sat_spt"] > 0:
+            # todo add east_sat_spt, east_itecpu_er, but more importantly, duble check this makes sense
             tmp_rew = np.diff([
-                [obs["htg_spt"], obs["iat"]],
-                [obs["iat"], obs["clg_spt"]]
+                [obs["west_itecpu_er"], obs["west_sat_spt"]]
             ])
             tmp_rew = tmp_rew[tmp_rew < 0]
             tmp_rew = np.max(np.abs(tmp_rew)) if tmp_rew.size > 0 else 0
         else:
             tmp_rew = 0
 
-        reward = -(1e-7 * (obs["elec"] + obs["dh"])) - tmp_rew - (1e-3 * obs["co2"])
+        reward = -(1e-7 * obs["elec"]) - tmp_rew
+        print(f"reward: {reward}")
         return reward
 
     @staticmethod
@@ -447,7 +463,7 @@ if __name__ == "__main__":
         PPOConfig()
         .environment(
             env=EnergyPlusEnv,
-            env_config=vars(args)
+            env_config=vars(args),
         )
         .training(
             gamma=0.95,
@@ -456,30 +472,34 @@ if __name__ == "__main__":
             train_batch_size=4000,
             sgd_minibatch_size=128,
             vf_loss_coeff=0.01,
+            use_critic=True,
+            use_gae=True,
             model={"use_lstm": args.use_lstm},
-            # TODO: enable learner API once LSTM / Attention nets are supported
-            _enable_learner_api=False
+            _enable_learner_api=True,
         )
+        .rl_module(_enable_rl_module_api=True)
         .framework(
             framework=args.framework,
             eager_tracing=args.framework == "tf2"
         )
-        .resources(num_gpus=args.num_gpus)
+        .resources(
+            num_gpus=args.num_gpus,
+            num_gpus_per_worker=0,
+            num_cpus_per_worker=1,
+        )
         .rollouts(num_rollout_workers=args.num_workers)
     )
 
-
+    print(f"PPO Config: {config.to_dict()}")
 
     #tuners search hyperparameter space
     tune.Tuner(
-        "PPO",
+        trainable="PPO",
         run_config=air.RunConfig(
             stop={"timesteps_total": args.timesteps},
             failure_config=air.FailureConfig(max_failures=0, fail_fast=True),
         ),
         param_space=config.to_dict(),
     ).fit()
-
-
 
     ray.shutdown()
