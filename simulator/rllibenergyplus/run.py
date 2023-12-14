@@ -432,9 +432,7 @@ class EnergyPlusEnv(gym.Env):
 if __name__ == "__main__":
     args = parse_args()
 
-    # uncomment to check if env is serializable
-    # ray.util.inspect_serializability(EnergyPlusEnv({}))
-
+    # Initialize Ray
     ray.init()
 
     # Ray configuration. See Ray docs for tuning
@@ -452,8 +450,8 @@ if __name__ == "__main__":
             sgd_minibatch_size=128,
             vf_loss_coeff=0.01,
             model={"use_lstm": args.use_lstm},
-            # TODO: enable learner API once LSTM / Attention nets are supported
-            _enable_learner_api=False
+            # Enable learner API if needed
+            _enable_learner_api=True  # Changed from False to True
         )
         .framework(
             framework=args.framework,
@@ -463,9 +461,7 @@ if __name__ == "__main__":
         .rollouts(num_rollout_workers=args.num_workers)
     )
 
-
-
-    #tuners search hyperparameter space
+    # Tuner searches hyperparameter space
     tune.Tuner(
         "PPO",
         run_config=air.RunConfig(
@@ -474,7 +470,5 @@ if __name__ == "__main__":
         ),
         param_space=config.to_dict(),
     ).fit()
-
-
 
     ray.shutdown()
