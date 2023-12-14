@@ -1,35 +1,39 @@
 import torch
 import torch.nn as nn
-import scipy
-
-
+import numpy as np
+import torch.optim as optim
+from torch.utils.data import DataLoader
 
 class LinearNN(nn.Module):
+    def __init__(self, feature_dim, action_dim, hidden_dim=64):
+        super(LinearNN, self).__init__()
+        self.lin1 = nn.Linear(feature_dim + action_dim, hidden_dim)
+        self.relu = nn.ReLU()
+        self.lin2 = nn.Linear(hidden_dim, feature_dim)
+        self.dropout = nn.Dropout(0.5)
 
-    def __init__(self, feature_dim, action_dim):
-        self.lin1 = nn.Linear(feature_dim+action_dim, feature_dim)
     def forward(self, x):
-        return self.lin1(x)
+        x = self.relu(self.lin1(x))
+        x = self.dropout(x)
+        return self.lin2(x)
 
 def train(model, trainloader, optimizer, loss_fn, epochs, scheduler=None, batches=-1):
-    device = "cuda:0" if torch.cuda.is_available() else "cpu"
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model.to(device)
     model.train()
     for e in range(epochs):
-        # Iterating over data to carry out training step
         for ii, (inputs, labels) in enumerate(trainloader):
-            if batches == ii:
-                del inputs, labels
+            if batches != -1 and ii >= batches:
                 break
             inputs, labels = inputs.to(device), labels.to(device)
             optimizer.zero_grad()
-            outs = model.forward(inputs)
-            outs, labels = torch.squeeze(outs), torch.squeeze(labels)
-            loss = loss_fn(outs, labels)
+            outputs = model(inputs)
+            loss = loss_fn(outputs, labels)
             loss.backward()
             optimizer.step()
-            del inputs, labels, outs
-        if scheduler:
-            scheduler.step()
+            if scheduler:
+                scheduler.step()
+        print(f"Epoch {e+1}/{epochs}, Loss: {loss.item()}")
     model.eval()
 class StateEstimator:
     def __init__(self, s0):
