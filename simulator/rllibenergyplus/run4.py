@@ -13,9 +13,14 @@ import ray
 from gymnasium.spaces import Discrete, MultiDiscrete
 from ray import tune, air
 from ray.rllib.algorithms.ppo import PPOConfig
+from ray.rllib.models import ModelCatalog
+from ray.rllib.models.torch.torch_modelv2 import TorchModelV2
+from ray.rllib.algorithms import ppo
 
 from pyenergyplus.api import EnergyPlusAPI
 from pyenergyplus.datatransfer import DataExchange
+
+from models.nn.model import LinearNN
 
 
 def parse_args() -> argparse.Namespace:
@@ -263,14 +268,13 @@ class EnergyPlusRunner:
             return
 
         next_action = self.act_queue.get()
-        print(f"Next action: {next_action}")
         # assert isinstance(next_action, list)
 
         # actions_handles = ["w_sat_spt", "e_sat_spt", "w_zone_spt", "e_zone_spt"]
         actions_handles = ["w_sat_spt", "e_sat_spt", "w_hvac_fr", "e_hvac_fr"]
 
         for handle_idx in range(len(actions_handles)):
-            print(f"taking action {self.actuator_handles[actions_handles[handle_idx]]} : {next_action[handle_idx]}")
+            # print(f"taking action {self.actuator_handles[actions_handles[handle_idx]]} : {next_action[handle_idx]}")
             self.x.set_actuator_value(
                 state=state_argument,
                 actuator_handle=self.actuator_handles[actions_handles[handle_idx]],
@@ -417,14 +421,11 @@ class EnergyPlusEnv(gym.Env):
         else:
             # rescale agent decision to actuator range
             # this is equivalent to clamping to the safety constraints on the actions
-            ranges = [(10, 30), (10, 30), (0, 6), (0, 6)]
             values = [self._rescale(
                 n=int(action[i]),  # noqa
                 range1=(0, self.action_space.nvec[i]),
                 range2=(0, 30)
             ) for i in range(len(action))]
-
-            print(f"Rescaled values: {values}")
 
             # enqueue action (received by EnergyPlus through dedicated callback)
             # then wait to get next observation.
@@ -456,7 +457,9 @@ class EnergyPlusEnv(gym.Env):
     @staticmethod
     def _compute_reward(obs: Dict[str, float]) -> float:
         """compute reward scalar"""
-        if obs["w_hvac_tspt"] > 0 and obs["e_hvac_tspt"] > 0:
+        if obs is None:
+            return 0
+        if obs is not None and obs["w_hvac_tspt"] > 0 and obs["e_hvac_tspt"] > 0:
             vals = np.array([[obs["w_iat"], obs["w_hvac_tspt"]], [obs["e_iat"], obs["e_hvac_tspt"]]])
             tmp_rew = np.diff(vals, axis=1).squeeze()
 
@@ -465,7 +468,7 @@ class EnergyPlusEnv(gym.Env):
         else:
             tmp_rew = 0
 
-        reward = -(1e-8 * (obs["cooling_elec"] + obs["plant_elec"] + obs["hvac_elec"] + obs["building_elec"] + obs["it_elec"])) - tmp_rew
+        reward = -(1e-8 * (obs["cooling_elec"] + obs["plant_elec"] + obs["hvac_elec"] + obs["building_elec"] + obs["it_elec"])) / 20000# - tmp_rew
         return reward
 
     @staticmethod
@@ -483,6 +486,9 @@ if __name__ == "__main__":
     args = parse_args()
 
     ray.init()
+
+    ModelCatalog.register_custom_model("torch_model", LinearNN)
+
 
     # Ray configuration. See Ray docs for tuning
     config = (
@@ -502,11 +508,13 @@ if __name__ == "__main__":
             use_gae=True,
             model={
                 "use_lstm": args.use_lstm,
+                # "use_lstm": True,
                 "vf_share_layers": False,
+                "custom_model": "torch_model"
             },
-            _enable_learner_api=True,
+            _enable_learner_api=False,
         )
-        .rl_module(_enable_rl_module_api=True)
+        .rl_module(_enable_rl_module_api=False)
         .framework(
             framework=args.framework,
             eager_tracing=args.framework == "tf2",
@@ -520,8 +528,7 @@ if __name__ == "__main__":
 
     print("PPO config:", config.to_dict())
 
-    tune.Tuner(
-        "PPO",
+    tune.Tuner("PPO",
         run_config=air.RunConfig(
             stop={"timesteps_total": args.timesteps},
             failure_config=air.FailureConfig(max_failures=0, fail_fast=True),
