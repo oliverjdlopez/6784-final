@@ -106,17 +106,10 @@ class EnergyPlusRunner:
             "oat": ("Site Outdoor Air DryBulb Temperature", "Environment"),
             # °C
             "w_iat": ("Zone Mean Air Temperature", "WEST ZONE"),
-            # "e_iat": ("Zone Mean Air Temperature", "EAST ZONE"),
-            # "itecpu_er": ("ITE CPU Electricity Rate", "DATA CENTER SERVERS"),  # 1zonecrac.idf todo obtain units
-            # ppm
-            # "co2": ("Zone Air CO2 Concentration", "TZ_Amphitheater"),
-            # heating setpoint (°C)
-            # "htg_spt": ("Schedule Value", "HTG HVAC 1 ADJUSTED BY 1.1 F"),
-            # cooling setpoint (°C)
-            # "clg_spt": ("Schedule Value", "CLG HVAC 1 ADJUSTED BY 0 F"),
-            "w_clg_spt": ("Zone Thermostat Cooling Setpoint Temperature", "WEST ZONE"),
+            "e_iat": ("Zone Mean Air Temperature", "EAST ZONE"),
+            # "w_clg_spt": ("Zone Thermostat Cooling Setpoint Temperature", "WEST ZONE"),
             # "e_clg_spt": ("Zone Thermostat Cooling Setpoint Temperature", "EAST ZONE"),
-            # "e_hvac_spt": ("System Node Setpoint Temperature", "EAST AIR LOOP OUTLET NODE"),
+            "e_hvac_spt": ("System Node Setpoint Temperature", "EAST AIR LOOP OUTLET NODE"),
             "w_hvac_spt": ("System Node Setpoint Temperature" , "WEST AIR LOOP OUTLET NODE")
         }
         self.var_handles: Dict[str, int] = {}
@@ -137,11 +130,11 @@ class EnergyPlusRunner:
                 "WEST AIR LOOP OUTLET NODE"
             ),
             # EAST zone HVAC air loop air temperature setpoint (°C)
-            # "e_sat_spt": (
-            #     "System Node Setpoint",
-            #     "Temperature Setpoint",
-            #     "EAST AIR LOOP OUTLET NODE"
-            # ),
+            "e_sat_spt": (
+                "System Node Setpoint",
+                "Temperature Setpoint",
+                "EAST AIR LOOP OUTLET NODE"
+            ),
             # WEST zone thermostat cooling temperature setpoint (°C)
             # "w_zone_spt": (
             #     "Zone Temperature Control",
@@ -261,7 +254,7 @@ class EnergyPlusRunner:
         # assert isinstance(next_action, list)
 
         # actions_handles = ["w_sat_spt", "e_sat_spt", "w_zone_spt", "e_zone_spt"]
-        actions_handles = ["w_sat_spt"]
+        actions_handles = ["w_sat_spt", "e_sat_spt"]
 
         for handle_idx in range(len(actions_handles)):
             print(f"taking action {self.actuator_handles[actions_handles[handle_idx]]} : {next_action[handle_idx]}")
@@ -340,12 +333,12 @@ class EnergyPlusEnv(gym.Env):
         #     [40.0, 40.0, 40.0, 30.0, 30.0, 30.0, 30.0, 1e9, 1e9, 1e9]
         # )
 
-        # OAT, W IAT, west cooling setpoint, west hvac setpoint, cooling elec, plant elec, hvac elec
+        # OAT, W IAT, E IAT, west hvac setpoint, east hvac setpoint, cooling elec, plant elec, hvac elec
         low_obs = np.array(
-            [-40.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            [-40.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         )
         hig_obs = np.array(
-            [40.0, 40.0, 30.0, 30.0, 1e9, 1e9, 1e9]
+            [40.0, 40.0, 30.0, 30.0, 30.0, 1e9, 1e9, 1e9]
         )
 
         self.observation_space = gym.spaces.Box(
@@ -355,7 +348,8 @@ class EnergyPlusEnv(gym.Env):
 
         # action space: (west HVAC air temp, east HVAC air temp, west thermostat temp, east thermostat temp) (100 possible values)
         # self.action_space: MultiDiscrete = MultiDiscrete([100, 100, 100, 100])
-        self.action_space: Discrete = Discrete(100)
+        # self.action_space: Discrete = Discrete(100)
+        self.action_space: MultiDiscrete = MultiDiscrete([100, 100])
 
         self.energyplus_runner: Optional[EnergyPlusRunner] = None
         self.obs_queue: Optional[Queue] = None
@@ -406,27 +400,18 @@ class EnergyPlusEnv(gym.Env):
             obs = self.last_obs
         else:
             # rescale agent decision to actuator range
-            # sat_spt_value = self._rescale(
-            #     n=int(action),  # noqa
-            #     range1=(0, self.action_space.nvec[0]),
-            #     range2=(15, 30)
-            # )
+            # this is equivalent to clamping to the safety constraints on the actions
+
             # values = [self._rescale(
-            #     n=int(action[i]),  # noqa
-            #     range1=(0, self.action_space.nvec[i]),
-            #     range2=(15, 30)
-            # ) for i in range(len(action))]
+            #         n=int(action),  # noqa
+            #         range1=(0, self.action_space.n),
+            #         range2=(10, 30))]
 
             values = [self._rescale(
-                    n=int(action),  # noqa
-                    range1=(0, self.action_space.n),
-                    range2=(10, 30))]
-
-            # values = [self._rescale(
-            #     n=int(action[i]),  # noqa
-            #     range1=(0, self.action_space.n),
-            #     range2=(15, 30)
-            # ) for i in range(len(action))]
+                n=int(action[i]),  # noqa
+                range1=(0, self.action_space.nvec[i]),
+                range2=(10, 30)
+            ) for i in range(len(action))]
 
             print(f"Rescaled values: {values}")
 
@@ -460,9 +445,9 @@ class EnergyPlusEnv(gym.Env):
     @staticmethod
     def _compute_reward(obs: Dict[str, float]) -> float:
         """compute reward scalar"""
-        # if obs["w_clg_spt"] > 0 and obs["e_clg_spt"] > 0:
-        if obs["w_clg_spt"] > 0:
-            vals = np.array([[obs["w_iat"], obs["w_hvac_spt"]]])
+        # if obs["w_clg_spt"] > 0:
+        if obs["w_hvac_spt"] > 0 and obs["e_hvac_spt"] > 0:
+            vals = np.array([[obs["w_iat"], obs["w_hvac_spt"]], [obs["e_iat"], obs["e_hvac_spt"]]])
             # vals = np.array([[obs["w_iat"], obs["w_clg_spt"]], [obs["e_iat"], obs["e_clg_spt"]], [obs["w_iat"], obs["w_hvac_spt"]], [obs["e_iat"], obs["e_hvac_spt"]]])
             tmp_rew = np.diff(vals, axis=1).squeeze()
 
@@ -472,7 +457,7 @@ class EnergyPlusEnv(gym.Env):
             tmp_rew = 0
 
         reward = -(1e-7 * (obs["cooling_elec"] + obs["plant_elec"] + obs["hvac_elec"])) - tmp_rew
-        print(f"calced reward: {reward}")
+        # print(f"calced reward: {reward}")
         return reward
 
     @staticmethod
