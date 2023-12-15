@@ -4,6 +4,8 @@ import threading
 from queue import Queue, Empty, Full
 from tempfile import TemporaryDirectory
 from typing import Dict, Any, Tuple, Optional, List
+import torch
+import torch.nn as nn
 
 import gymnasium as gym
 import numpy as np
@@ -106,19 +108,30 @@ class EnergyPlusRunner:
             "oat": ("Site Outdoor Air DryBulb Temperature", "Environment"),
             # °C
             "w_iat": ("Zone Mean Air Temperature", "WEST ZONE"),
+            # °C
             "e_iat": ("Zone Mean Air Temperature", "EAST ZONE"),
-            # "w_clg_spt": ("Zone Thermostat Cooling Setpoint Temperature", "WEST ZONE"),
-            # "e_clg_spt": ("Zone Thermostat Cooling Setpoint Temperature", "EAST ZONE"),
-            "e_hvac_spt": ("System Node Setpoint Temperature", "EAST AIR LOOP OUTLET NODE"),
-            "w_hvac_spt": ("System Node Setpoint Temperature" , "WEST AIR LOOP OUTLET NODE")
+            # °C
+            "w_rat": ("System Node Temperature", "WEST ZONE INLET NODE"),
+            # °C
+            "e_rat": ("System Node Temperature", "WEST ZONE INLET NODE"),
+            # rh%
+            "w_rh": ("Zone Air Relative Humidity", "WEST ZONE"),
+            # rh%
+            "e_rh": ("Zone Air Relative Humidity", "EAST ZONE"),
+            # °C
+            "w_hvac_tspt": ("System Node Setpoint Temperature", "WEST AIR LOOP OUTLET NODE"),
+            # °C
+            "e_hvac_tspt": ("System Node Setpoint Temperature", "EAST AIR LOOP OUTLET NODE")
         }
         self.var_handles: Dict[str, int] = {}
 
         self.meters = {
-            # HVAC elec (J)
             "cooling_elec": "Cooling:Electricity",
             "plant_elec": "Electricity:Plant",
-            "hvac_elec": "Electricity:HVAC"
+            # HVAC electricity usage (J)
+            "hvac_elec": "Electricity:HVAC",
+            "building_elec": "Electricity:Building",
+            "it_elec": "ITE-CPU:InteriorEquipment:Electricity"
         }
         self.meter_handles: Dict[str, int] = {}
 
@@ -135,18 +148,18 @@ class EnergyPlusRunner:
                 "Temperature Setpoint",
                 "EAST AIR LOOP OUTLET NODE"
             ),
-            # WEST zone thermostat cooling temperature setpoint (°C)
-            # "w_zone_spt": (
-            #     "Zone Temperature Control",
-            #     "Cooling Setpoint",
-            #     "WEST ZONE"
-            # ),
-            # # EAST zone thermostat cooling temperature setpoint (°C)
-            # "e_zone_spt": (
-            #     "Zone Temperature Control",
-            #     "Cooling Setpoint",
-            #     "EAST ZONE"
-            # )
+            # WEST zone HVAC air loop air flow rate setpoint (m3/s)
+            "w_hvac_fr": (
+                "System Node Setpoint",
+                "Mass Flow Rate Setpoint",
+                "WEST AIR LOOP OUTLET NODE"
+            ),
+            # EAST zone HVAC air loop air flow rate setpoint (m3/s)
+            "e_hvac_fr": (
+                "System Node Setpoint",
+                "Mass Flow Rate Setpoint",
+                "EAST AIR LOOP OUTLET NODE"
+            )
         }
         self.actuator_handles: Dict[str, int] = {}
 
@@ -254,7 +267,7 @@ class EnergyPlusRunner:
         # assert isinstance(next_action, list)
 
         # actions_handles = ["w_sat_spt", "e_sat_spt", "w_zone_spt", "e_zone_spt"]
-        actions_handles = ["w_sat_spt", "e_sat_spt"]
+        actions_handles = ["w_sat_spt", "e_sat_spt", "w_hvac_fr", "e_hvac_fr"]
 
         for handle_idx in range(len(actions_handles)):
             print(f"taking action {self.actuator_handles[actions_handles[handle_idx]]} : {next_action[handle_idx]}")
@@ -325,20 +338,25 @@ class EnergyPlusEnv(gym.Env):
         self.timestep = 0
 
         # observation space:
-        # # OAT, W IAT, E IAT, west cooling setpoint, east cooling setpoint, east hvac setpoint, west hvac setpoint, cooling elec, plant elec, hvac elec
-        # low_obs = np.array(
-        #     [-40.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        # )
-        # hig_obs = np.array(
-        #     [40.0, 40.0, 40.0, 30.0, 30.0, 30.0, 30.0, 1e9, 1e9, 1e9]
-        # )
-
-        # OAT, W IAT, E IAT, west hvac setpoint, east hvac setpoint, cooling elec, plant elec, hvac elec
+        # OAT (-40, 40)
+        # W IAT, (0, 40)
+        # E IAT, (0, 40)
+        # W RAT, (0, 40)
+        # E RAT, (0, 40)
+        # W rh, (0,100)
+        # E rh, (0,100)
+        # W HVAC TSPT (0, 40)
+        # E HVAC TSPT (0, 40)
+        # cooling elec, (0, 1e9)
+        # plant elec, (0, 1e9)
+        # hvac elec (0, 1e9)
+        # building elec (0, 1e9)
+        # it equipment elec (0, 1e9)
         low_obs = np.array(
-            [-40.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            [-40.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         )
         hig_obs = np.array(
-            [40.0, 40.0, 30.0, 30.0, 30.0, 1e9, 1e9, 1e9]
+            [40.0, 40.0, 40.0, 40.0, 40.0, 100.0, 100.0, 40.0, 40.0, 1e9, 1e9, 1e9, 1e9, 1e9]
         )
 
         self.observation_space = gym.spaces.Box(
@@ -346,10 +364,8 @@ class EnergyPlusEnv(gym.Env):
         )
         self.last_obs = {}
 
-        # action space: (west HVAC air temp, east HVAC air temp, west thermostat temp, east thermostat temp) (100 possible values)
-        # self.action_space: MultiDiscrete = MultiDiscrete([100, 100, 100, 100])
-        # self.action_space: Discrete = Discrete(100)
-        self.action_space: MultiDiscrete = MultiDiscrete([100, 100])
+        # action space: (west HVAC air temp, east HVAC air temp, west HVAC flow rate, east HVAC flow rate) (100 possible values each)
+        self.action_space: MultiDiscrete = MultiDiscrete([100, 100, 100, 100])
 
         self.energyplus_runner: Optional[EnergyPlusRunner] = None
         self.obs_queue: Optional[Queue] = None
@@ -401,16 +417,11 @@ class EnergyPlusEnv(gym.Env):
         else:
             # rescale agent decision to actuator range
             # this is equivalent to clamping to the safety constraints on the actions
-
-            # values = [self._rescale(
-            #         n=int(action),  # noqa
-            #         range1=(0, self.action_space.n),
-            #         range2=(10, 30))]
-
+            ranges = [(10, 30), (10, 30), (0, 6), (0, 6)]
             values = [self._rescale(
                 n=int(action[i]),  # noqa
                 range1=(0, self.action_space.nvec[i]),
-                range2=(10, 30)
+                range2=(0, 30)
             ) for i in range(len(action))]
 
             print(f"Rescaled values: {values}")
@@ -445,10 +456,8 @@ class EnergyPlusEnv(gym.Env):
     @staticmethod
     def _compute_reward(obs: Dict[str, float]) -> float:
         """compute reward scalar"""
-        # if obs["w_clg_spt"] > 0:
-        if obs["w_hvac_spt"] > 0 and obs["e_hvac_spt"] > 0:
-            vals = np.array([[obs["w_iat"], obs["w_hvac_spt"]], [obs["e_iat"], obs["e_hvac_spt"]]])
-            # vals = np.array([[obs["w_iat"], obs["w_clg_spt"]], [obs["e_iat"], obs["e_clg_spt"]], [obs["w_iat"], obs["w_hvac_spt"]], [obs["e_iat"], obs["e_hvac_spt"]]])
+        if obs["w_hvac_tspt"] > 0 and obs["e_hvac_tspt"] > 0:
+            vals = np.array([[obs["w_iat"], obs["w_hvac_tspt"]], [obs["e_iat"], obs["e_hvac_tspt"]]])
             tmp_rew = np.diff(vals, axis=1).squeeze()
 
             tmp_rew = tmp_rew[tmp_rew < 0]
@@ -456,8 +465,7 @@ class EnergyPlusEnv(gym.Env):
         else:
             tmp_rew = 0
 
-        reward = -(1e-7 * (obs["cooling_elec"] + obs["plant_elec"] + obs["hvac_elec"])) - tmp_rew
-        # print(f"calced reward: {reward}")
+        reward = -(1e-8 * (obs["cooling_elec"] + obs["plant_elec"] + obs["hvac_elec"] + obs["building_elec"] + obs["it_elec"])) - tmp_rew
         return reward
 
     @staticmethod
@@ -473,9 +481,6 @@ class EnergyPlusEnv(gym.Env):
 
 if __name__ == "__main__":
     args = parse_args()
-
-    # uncomment to check if env is serializable
-    # ray.util.inspect_serializability(EnergyPlusEnv({}))
 
     ray.init()
 
