@@ -8,10 +8,12 @@ from typing import Dict, Any, Tuple, Optional, List
 import gymnasium as gym
 import numpy as np
 import ray
+import torch
 from gymnasium.spaces import Discrete, MultiDiscrete
 from ray import tune, air
 from ray.rllib.algorithms.ppo import PPOConfig
-
+from ray.rllib.core.rl_module.rl_module import SingleAgentRLModuleSpec
+from Custom import CustomModule, simulate_with_pretrained
 from pyenergyplus.api import EnergyPlusAPI
 from pyenergyplus.datatransfer import DataExchange
 
@@ -481,11 +483,11 @@ if __name__ == "__main__":
     args = parse_args()
 
     # uncomment to check if env is serializable
-    # ray.util.inspect_serializability(EnergyPlusEnv({}))
+    # print(ray.util.inspect_serializability(EnergyPlusEnv({})))
 
-    ray.init()
+    ray.init()    # Ray configuration. See Ray docs for tuning
 
-    # Ray configuration. See Ray docs for tuning
+    """classic ppo learning"""
     config = (
         PPOConfig()
         .environment(
@@ -519,8 +521,6 @@ if __name__ == "__main__":
         )
     )
 
-    print("PPO config:", config.to_dict())
-
     tune.Tuner(
         "PPO",
         run_config=air.RunConfig(
@@ -529,5 +529,21 @@ if __name__ == "__main__":
         ),
         param_space=config.to_dict(),
     ).fit()
+
+    """would be used for learning model based off pretrained model"""
+    # env = EnergyPlusEnv(vars(args))
+    # spec = SingleAgentRLModuleSpec(
+    #     module_class = CustomModule,
+    #     observation_space = env.observation_space,
+    #     action_space = env.action_space,
+    #     model_config_dict={"none": "none"}
+    # )
+    #
+    # module = spec.build()
+    # model = torch.load("pretrained")
+    # module.policy = model
+    #
+    # simulate_with_pretrained("pretrained", env)
+
 
     ray.shutdown()
