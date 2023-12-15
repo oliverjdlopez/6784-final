@@ -3,5 +3,5 @@ __pycache__/
 .idea/
 **/.DS_Store
 
-simulator/output*/
+simulator/output*/**
 simulator/output/**
