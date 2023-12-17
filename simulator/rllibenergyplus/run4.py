@@ -52,7 +52,7 @@ def parse_args() -> argparse.Namespace:
         "--timesteps", "-t",
         help="Number of timesteps to train",
         required=False,
-        default=1e6
+        default=1e7
     )
     parser.add_argument(
         "--num-workers",
@@ -194,6 +194,7 @@ class EnergyPlusRunner:
 
             if not self.simulation_complete:
                 # free consumers from waiting
+                print("PUTTING NONE")
                 self.obs_queue.put(None)
                 self.act_queue.put(None)
                 self.stop()
@@ -402,6 +403,8 @@ class EnergyPlusEnv(gym.Env):
 
         # wait until E+ is ready.
         obs = self.obs_queue.get()
+        if obs is None:
+            obs = self.observation_space.sample()
         self.last_obs = obs
         return np.array(list(obs.values())), {}
 
@@ -424,7 +427,7 @@ class EnergyPlusEnv(gym.Env):
             values = [self._rescale(
                 n=int(action[i]),  # noqa
                 range1=(0, self.action_space.nvec[i]),
-                range2=(0, 30)
+                range2=[(0,30), (0,30), (0,3), (0,3)][i]
             ) for i in range(len(action))]
 
             # enqueue action (received by EnergyPlus through dedicated callback)
@@ -433,18 +436,26 @@ class EnergyPlusEnv(gym.Env):
             # and materializes by worker thread waiting on this queue (EnergyPlus callback
             # not consuming yet/anymore)
             # timeout value can be increased if E+ timestep takes longer
-            timeout = 2
+            timeout = 4
             try:
                 self.act_queue.put(values, timeout=timeout)
                 self.last_obs = obs = self.obs_queue.get(timeout=timeout)
             except (Full, Empty):
                 done = True
+                # print("DONE")
                 obs = self.last_obs
+
+        obs_vec = None
+
+        if obs is None:
+            obs = self.observation_space.sample()
+            obs_vec = obs
+        else:
+            obs_vec = np.array(list(obs.values()))
 
         # compute reward
         reward = self._compute_reward(obs)
 
-        obs_vec = np.array(list(obs.values()))
         return obs_vec, reward, done, False, {}
 
     def close(self):
@@ -457,7 +468,7 @@ class EnergyPlusEnv(gym.Env):
     @staticmethod
     def _compute_reward(obs: Dict[str, float]) -> float:
         """compute reward scalar"""
-        if obs is None:
+        if obs is None or not isinstance(obs, Dict):
             return 0
         if obs is not None and obs["w_hvac_tspt"] > 0 and obs["e_hvac_tspt"] > 0:
             vals = np.array([[obs["w_iat"], obs["w_hvac_tspt"]], [obs["e_iat"], obs["e_hvac_tspt"]]])
@@ -468,7 +479,9 @@ class EnergyPlusEnv(gym.Env):
         else:
             tmp_rew = 0
 
-        reward = -(1e-8 * (obs["cooling_elec"] + obs["plant_elec"] + obs["hvac_elec"] + obs["building_elec"] + obs["it_elec"])) / 20000# - tmp_rew
+        # reward = -(1e-8 * (obs["cooling_elec"] + obs["plant_elec"] + obs["hvac_elec"] + obs["building_elec"] + obs["it_elec"])) / 20000# - tmp_rew
+        reward = -(1e-7 * (obs["cooling_elec"] + obs["plant_elec"] + obs["hvac_elec"])) - tmp_rew
+
         return reward
 
     @staticmethod
@@ -488,6 +501,7 @@ if __name__ == "__main__":
     ray.init()
 
     ModelCatalog.register_custom_model("torch_model", LinearNN)
+    ModelCatalog.get_model_v2
 
 
     # Ray configuration. See Ray docs for tuning
