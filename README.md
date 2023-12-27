@@ -9,5 +9,9 @@ Specifically, we utilize the newly introduced Marconi100 supercomputer dataset t
 Please see our final report at "paper.pdf"
 
 
-The EnergyPlus RLlib environment can be found here: https://github.com/airboxlab/rllib-energyplus
-The Marconi100 dataset can be found here: https://www.nature.com/articles/s41597-023-02174-3
+
+
+
+EnergyPlus RLlib environment: https://github.com/airboxlab/rllib-energyplus
+
+M100 data: https://www.nature.com/articles/s41597-023-02174-3
