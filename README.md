@@ -6,7 +6,7 @@ Data centers are increasingly prevalent, and are estimated to account for around
 Optimizing data center cooling systems is therefore critical step towards sustainable computing. We provide a novel framework to develop cooling systems, while reducing suboptimality during the training/exploration phase. 
 Specifically, we utilize the newly introduced Marconi100 supercomputer dataset to pretrain a cooling policy, before finetuning on an unseen datacenter. We verify our results using thermal simulations run with EnergyPlus.
 
-Please see our final report at "paper.pdf"
+You can find our final paper [here](paper.pdf)
 
 
 
